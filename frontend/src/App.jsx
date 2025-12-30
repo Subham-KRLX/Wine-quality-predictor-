@@ -51,7 +51,7 @@ function PredictPage() {
     };
 
     return (
-        <div className="min-h-screen dark:bg-slate-950" style={{ background: 'linear-gradient(135deg, #F5F5F5 0%, #FAFAFA 100%)' }}>
+        <div className="min-h-screen dark:bg-slate-950 [background:linear-gradient(135deg,#F5F5F5_0%,#FAFAFA_100%)]">
             {/* Header with wine gradient */}
             <div className="shadow-lg border-b-2 dark:border-slate-700 border-amber-400/30 sticky top-0 z-50 backdrop-blur-sm dark:bg-slate-900" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">

@@ -8,21 +8,8 @@ const Layout = ({ children }) => {
 
     return (
         <div className="min-h-screen dark:bg-slate-950">
-            {/* Navbar */}
-            <nav className="sticky top-0 z-50 bg-white dark:bg-slate-900 shadow-md dark:shadow-slate-800 border-b dark:border-slate-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex items-center justify-between h-16">
-                        {/* Logo */}
-                        <div className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-                            <Wine className="h-6 w-6 text-amber-600 dark:text-amber-400" />
-                            <span className="text-xl font-serif font-bold text-wine-900 dark:text-white">VinoPredict</span>
-                        </div>
-
-                        {/* Theme Toggle */}
-                        <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} navBar={true} />
-                    </div>
-                </div>
-            </nav>
+            {/* Theme Toggle (Fixed Position) */}
+            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
 
             {/* Content */}
             {children}

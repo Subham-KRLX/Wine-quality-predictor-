@@ -5,9 +5,9 @@ import { Wine, Sparkles, TrendingUp, ArrowRight, Award, Shield, BarChart3 } from
 
 const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
     return (
-        <div className="min-h-screen dark:bg-slate-950 transition-colors duration-300" style={{ backgroundColor: '#F5F5F5' }}>
+        <div className="min-h-screen dark:bg-slate-950 transition-colors duration-300 bg-[#F5F5F5]">
             {/* Hero Section with Wine → Amber Gradient */}
-            <div className="relative overflow-hidden text-white dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-800" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
+            <div className="relative overflow-hidden text-white dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-800 [background:linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
                 {/* Animated background elements */}
                 <div className="absolute inset-0 overflow-hidden opacity-20">
                     <div className="absolute top-0 -right-1/4 w-1/2 h-1/2 bg-amber-400 rounded-full blur-3xl animate-pulse"></div>
@@ -108,7 +108,7 @@ const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
             </div>
 
             {/* Features Section */}
-            <div id="features" className="py-28 dark:bg-slate-900 transition-colors duration-300" style={{ backgroundColor: '#F5F5F5' }}>
+            <div id="features" className="py-28 dark:bg-slate-900 transition-colors duration-300 bg-[#F5F5F5]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
