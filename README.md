@@ -2,43 +2,58 @@
 
 A full-stack machine learning application to predict wine quality based on physicochemical properties.
 
+## 🚀 Live Demo
+- **Frontend App**: [https://wine-quality-predictor-pi.vercel.app](https://wine-quality-predictor-pi.vercel.app)
+- **Backend API Docs**: [https://wine-quality-backend.onrender.com/docs](https://wine-quality-backend.onrender.com/docs)
+
 ## Tech Stack
-- **Backend**: FastAPI
-- **Frontend**: React + Vite + TailwindCSS
+- **Frontend**: React + Vite + TailwindCSS (Deployed on Vercel)
+- **Backend**: FastAPI (Deployed on Render)
 - **ML Model**: Random Forest (Scikit-learn)
-- **Deployment**: Docker
+- **Deployment**: Docker, Vercel, Render
 
 ## Features
-- Interactive Web UI
-- Real-time prediction
+- Interactive Web UI with modern design
+- Real-time quality prediction using ML
 - Feature importance visualization
-- Responsive design
+- Responsive mobile-first design
 
-## Quick Start (Docker)
+---
 
-1. **Build and Run**
-   ```bash
-   docker-compose up --build
-   ```
+## 💻 Local Development Setup
 
-2. **Access Application**
-   - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000/docs
+If you want to run this project locally on your machine:
 
-## Manual Setup
-
-### Backend
+### 1. Backend Setup
 ```bash
+# Navigate to root directory
 python -m venv venv
-source venv/bin/activate
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
-python ml_pipeline/train_model.py  # Train model first
+
+# Train the model (Required for first run)
+python ml_pipeline/train_model.py
+
+# Start the server
 uvicorn backend.app.main:app --reload
 ```
+The API will run at `http://localhost:8000`.
 
-### Frontend
+### 2. Frontend Setup
 ```bash
 cd frontend
+
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
+```
+The App will run at `http://localhost:5173`.
+
+### 3. Docker (Optional)
+```bash
+docker-compose up --build
 ```
