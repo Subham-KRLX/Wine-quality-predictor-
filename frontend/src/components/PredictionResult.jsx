@@ -65,34 +65,23 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
             tl.from(cardRef.current, {
-                scale: 0.8,
                 opacity: 0,
-                y: 50,
-                duration: 0.6
+                duration: 0.4
             })
                 .from(scoreRef.current, {
-                    scale: 0,
                     opacity: 0,
-                    rotation: -180,
-                    duration: 0.8,
-                    ease: 'elastic.out(1, 0.5)'
-                }, '-=0.3')
+                    scale: 0.95,
+                    duration: 0.5,
+                    ease: 'back.out(1.1)'
+                }, '-=0.2')
                 .from(labelRef.current, {
                     opacity: 0,
-                    y: 20,
-                    duration: 0.4
-                }, '-=0.4')
-                .from(progressRef.current, {
-                    scaleX: 0,
-                    transformOrigin: 'left',
-                    duration: 1,
-                    ease: 'power2.out'
+                    duration: 0.3
                 }, '-=0.3')
                 .from(strengthCardRef.current, {
-                    x: -50,
                     opacity: 0,
-                    duration: 0.6
-                }, '-=0.5');
+                    duration: 0.4
+                }, '-=0.3');
         });
 
         return () => ctx.revert();
@@ -154,7 +143,7 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
 
                 <div ref={progressRef} className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
                     <motion.div
-                        className={`h-3 rounded-full ${quality_label === 'Good' ? 'bg-emerald-400' : quality_label === 'Poor' ? 'bg-red-400' : 'bg-amber-400'}`}
+                        className={`progress-bar h-3 rounded-full ${quality_label === 'Good' ? 'bg-emerald-400' : quality_label === 'Poor' ? 'bg-red-400' : 'bg-amber-400'}`}
                         initial={{ width: 0 }}
                         animate={{ width: `${percentage}%` }}
                         transition={{ duration: 1, ease: "easeOut" }}
