@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
 const useTheme = () => {
-    // Always false for light mode
-    const isDark = false;
+    // Always true for dark mode
+    const isDark = true;
 
     useEffect(() => {
-        // Enforce light mode on mount
-        document.documentElement.classList.remove('dark');
-        localStorage.removeItem('theme');
+        // Enforce dark mode on mount
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
     }, []);
 
     const toggleTheme = () => {
