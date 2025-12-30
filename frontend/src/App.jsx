@@ -5,6 +5,8 @@ import HomePage from './pages/HomePage';
 import WineForm from './components/WineForm';
 import PredictionResult from './components/PredictionResult';
 import FeatureImportanceChart from './components/FeatureImportanceChart';
+import ThemeToggle from './components/ThemeToggle';
+import useTheme from './hooks/useTheme';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
 import { Sparkles, Info, Wine, Home } from 'lucide-react';
 
@@ -177,8 +179,11 @@ const HomePageWrapper = () => {
 };
 
 function App() {
+    const { isDark, toggleTheme } = useTheme();
+
     return (
         <Router>
+            <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
             <Layout>
                 <Routes>
                     <Route path="/" element={<HomePageWrapper />} />

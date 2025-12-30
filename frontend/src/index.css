@@ -6,6 +6,15 @@
     body {
         @apply antialiased;
     }
+
+    /* Dark mode base styles */
+    :root.dark {
+        color-scheme: dark;
+    }
+
+    :root.dark body {
+        @apply bg-slate-950 text-white;
+    }
 }
 
 @layer utilities {
@@ -37,6 +46,12 @@
         background: rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Dark mode specific utilities */
+    :root.dark .glass {
+        background: rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 }

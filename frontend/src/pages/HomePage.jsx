@@ -4,9 +4,9 @@ import { Wine, Sparkles, TrendingUp, ArrowRight, Award, Shield, BarChart3 } from
 
 const HomePage = ({ onGetStarted }) => {
     return (
-        <div className="min-h-screen" style={{ backgroundColor: '#F5F5F5' }}>
+        <div className="min-h-screen dark:bg-slate-950 transition-colors duration-300" style={{ backgroundColor: '#F5F5F5' }}>
             {/* Hero Section with Wine → Amber Gradient */}
-            <div className="relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
+            <div className="relative overflow-hidden text-white dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-800" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
                 {/* Animated background elements */}
                 <div className="absolute inset-0 overflow-hidden opacity-20">
                     <div className="absolute top-0 -right-1/4 w-1/2 h-1/2 bg-amber-400 rounded-full blur-3xl animate-pulse"></div>
@@ -97,14 +97,17 @@ const HomePage = ({ onGetStarted }) => {
 
                 {/* Elegant wave separator */}
                 <div className="absolute bottom-0 left-0 right-0">
-                    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+                    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto dark:hidden">
                         <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#F5F5F5" />
+                    </svg>
+                    <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto hidden dark:block">
+                        <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#0f172a" />
                     </svg>
                 </div>
             </div>
 
             {/* Features Section */}
-            <div id="features" className="py-28" style={{ backgroundColor: '#F5F5F5' }}>
+            <div id="features" className="py-28 dark:bg-slate-900 transition-colors duration-300" style={{ backgroundColor: '#F5F5F5' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -113,10 +116,10 @@ const HomePage = ({ onGetStarted }) => {
                         transition={{ duration: 0.8 }}
                         className="text-center mb-20"
                     >
-                        <h2 className="text-5xl sm:text-6xl font-serif font-bold text-wine-900 mb-6">
+                        <h2 className="text-5xl sm:text-6xl font-serif font-bold dark:text-white text-wine-900 mb-6">
                             Why Choose VinoPredict?
                         </h2>
-                        <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                        <p className="text-xl dark:text-gray-300 text-gray-700 max-w-3xl mx-auto leading-relaxed">
                             Combining centuries of wine expertise with cutting-edge artificial intelligence
                         </p>
                     </motion.div>
@@ -154,12 +157,12 @@ const HomePage = ({ onGetStarted }) => {
                                 {/* Hover glow effect */}
                                 <div className={`absolute inset-0 bg-${feature.color === 'wine' ? 'wine' : 'amber'}-200 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-3xl blur-2xl -z-10`}></div>
 
-                                <div className="bg-white rounded-3xl p-10 shadow-xl border-2 border-gray-100 hover:border-wine-200 hover:shadow-2xl transition-all h-full">
+                                <div className="bg-white dark:bg-slate-800 rounded-3xl p-10 shadow-xl border-2 dark:border-slate-700 border-gray-100 hover:border-wine-200 dark:hover:border-amber-400 hover:shadow-2xl transition-all h-full">
                                     <div className={`inline-flex p-5 rounded-2xl mb-6 shadow-lg`} style={{ background: feature.color === 'wine' ? 'linear-gradient(135deg, #722F37 0%, #B31329 100%)' : 'linear-gradient(135deg, #f1a64b 0%, #e28a2f 100%)' }}>
                                         <feature.icon className="h-10 w-10 text-white" strokeWidth={1.5} />
                                     </div>
-                                    <h3 className="text-2xl font-serif font-bold text-wine-900 mb-4">{feature.title}</h3>
-                                    <p className="text-gray-700 leading-relaxed text-base">{feature.description}</p>
+                                    <h3 className="text-2xl font-serif font-bold dark:text-white text-wine-900 mb-4">{feature.title}</h3>
+                                    <p className="dark:text-gray-300 text-gray-700 leading-relaxed text-base">{feature.description}</p>
                                 </div>
                             </motion.div>
                         ))}
@@ -196,7 +199,7 @@ const HomePage = ({ onGetStarted }) => {
             </div>
 
             {/* CTA Section */}
-            <div className="relative overflow-hidden bg-wine-900 text-white py-28">
+            <div className="relative overflow-hidden dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-800 text-white bg-wine-900 py-28">
                 <div className="absolute inset-0 opacity-5">
                     <div className="absolute inset-0" style={{
                         backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Ccircle cx='30' cy='30' r='5'/%3E%3C/g%3E%3C/svg%3E")`,
@@ -235,14 +238,14 @@ const HomePage = ({ onGetStarted }) => {
             </div>
 
             {/* Footer */}
-            <footer className="bg-wine-950 text-white/60 py-12 border-t border-white/10">
+            <footer className="dark:bg-slate-950 dark:border-slate-700 dark:text-white/50 bg-wine-950 text-white/60 py-12 border-t border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div
                         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                        className="flex justify-center items-center gap-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity"
+                        className="flex justify-center items-center gap-3 mb-4 cursor-pointer dark:hover:text-white/80 hover:opacity-80 transition-opacity"
                     >
                         <Wine className="h-6 w-6 text-amber-400" />
-                        <span className="font-serif font-semibold text-xl text-white">VinoPredict</span>
+                        <span className="font-serif font-semibold text-xl dark:text-white text-white">VinoPredict</span>
                     </div>
                     <p className="text-sm mb-2">Premium AI-Powered Wine Quality Assessment</p>
                     <p className="text-xs">&copy; {new Date().getFullYear()} VinoPredict. All rights reserved.</p>
