@@ -30,12 +30,17 @@ const HomePage = ({ onGetStarted }) => {
                     >
                         {/* Logo/Icon */}
                         <div className="flex justify-center mb-10">
-                            <div className="relative">
+                            <motion.div
+                                whileHover={{ scale: 1.05, rotate: 5 }}
+                                whileTap={{ scale: 0.95 }}
+                                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                                className="relative cursor-pointer"
+                            >
                                 <div className="absolute inset-0 bg-amber-400 rounded-full blur-3xl opacity-40 animate-pulse"></div>
                                 <div className="relative glass-dark p-8 rounded-full border-2 border-white/30 shadow-2xl">
                                     <Wine className="h-20 w-20 text-amber-300" strokeWidth={1.5} />
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
 
                         <motion.h1
@@ -232,7 +237,10 @@ const HomePage = ({ onGetStarted }) => {
             {/* Footer */}
             <footer className="bg-wine-950 text-white/60 py-12 border-t border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <div className="flex justify-center items-center gap-3 mb-4">
+                    <div
+                        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                        className="flex justify-center items-center gap-3 mb-4 cursor-pointer hover:opacity-80 transition-opacity"
+                    >
                         <Wine className="h-6 w-6 text-amber-400" />
                         <span className="font-serif font-semibold text-xl text-white">VinoPredict</span>
                     </div>
