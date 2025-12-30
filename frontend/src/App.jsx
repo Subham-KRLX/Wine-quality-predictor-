@@ -72,17 +72,11 @@ function PredictPage() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <TabGroup>
                     <TabList className="flex gap-3 p-2 bg-white rounded-2xl shadow-xl border-2 border-wine-100 mb-10 max-w-md mx-auto">
-                        <Tab className={({ selected }) => `flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none ${selected
-                                ? 'text-white shadow-lg'
-                                : 'text-wine-700 hover:bg-cream-100'
-                            }`} style={({ selected }) => selected ? { background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' } : {}}>
+                        <Tab className="flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none text-wine-700 hover:bg-cream-100 data-[selected]:text-white data-[selected]:shadow-lg data-[selected]:bg-[linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
                             <Sparkles className="h-4 w-4" />
                             <span>Predict</span>
                         </Tab>
-                        <Tab className={({ selected }) => `flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none ${selected
-                                ? 'text-white shadow-lg'
-                                : 'text-wine-700 hover:bg-cream-100'
-                            }`} style={({ selected }) => selected ? { background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' } : {}}>
+                        <Tab className="flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none text-wine-700 hover:bg-cream-100 data-[selected]:text-white data-[selected]:shadow-lg data-[selected]:bg-[linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
                             <Info className="h-4 w-4" />
                             <span>About</span>
                         </Tab>
@@ -176,12 +170,17 @@ function PredictPage() {
     );
 }
 
+const HomePageWrapper = () => {
+    const navigate = useNavigate();
+    return <HomePage onGetStarted={() => navigate('/predict')} />;
+};
+
 function App() {
     return (
         <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<HomePage onGetStarted={() => window.location.href = '/predict'} />} />
+                    <Route path="/" element={<HomePageWrapper />} />
                     <Route path="/predict" element={<PredictPage />} />
                 </Routes>
             </Layout>
