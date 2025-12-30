@@ -55,3 +55,28 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 }
+    /* Dark mode text utilities for better visibility */
+    :root.dark body {
+        @apply text-gray-100;
+    }
+
+    :root.dark p {
+        @apply text-gray-300;
+    }
+
+    :root.dark h1,
+    :root.dark h2,
+    :root.dark h3,
+    :root.dark h4,
+    :root.dark h5,
+    :root.dark h6 {
+        @apply text-white;
+    }
+
+    :root.dark a {
+        @apply text-amber-400 hover:text-amber-300;
+    }
+
+    :root.dark button:not(.dark\:bg-slate-800) {
+        @apply dark:text-gray-100;
+    }

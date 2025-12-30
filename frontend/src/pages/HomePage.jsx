@@ -1,8 +1,9 @@
 import React from 'react';
+import ThemeToggle from '../components/ThemeToggle';
 import { motion } from 'framer-motion';
 import { Wine, Sparkles, TrendingUp, ArrowRight, Award, Shield, BarChart3 } from 'lucide-react';
 
-const HomePage = ({ onGetStarted }) => {
+const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
     return (
         <div className="min-h-screen dark:bg-slate-950 transition-colors duration-300" style={{ backgroundColor: '#F5F5F5' }}>
             {/* Hero Section with Wine → Amber Gradient */}
@@ -60,7 +61,7 @@ const HomePage = ({ onGetStarted }) => {
                             <p className="text-2xl sm:text-3xl text-amber-100 mb-4 font-light tracking-wide">
                                 AI-Powered Wine Quality Analysis
                             </p>
-                            <p className="text-lg sm:text-xl text-white/90 mb-14 max-w-3xl mx-auto leading-relaxed">
+                            <p className="text-lg sm:text-xl dark:text-gray-300 text-white/90 mb-14 max-w-3xl mx-auto leading-relaxed">
                                 Unlock the secrets of wine quality using advanced machine learning.
                                 Get instant predictions, expert insights, and personalized tasting recommendations.
                             </p>
@@ -116,7 +117,7 @@ const HomePage = ({ onGetStarted }) => {
                         transition={{ duration: 0.8 }}
                         className="text-center mb-20"
                     >
-                        <h2 className="text-5xl sm:text-6xl font-serif font-bold dark:text-white text-wine-900 mb-6">
+                        <h2 className="text-5xl sm:text-6xl font-serif font-bold dark:text-white dark:text-white text-wine-900 mb-6">
                             Why Choose VinoPredict?
                         </h2>
                         <p className="text-xl dark:text-gray-300 text-gray-700 max-w-3xl mx-auto leading-relaxed">
