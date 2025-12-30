@@ -100,7 +100,7 @@ const InputSection = ({ title, children, isOpen, toggle }) => (
 );
 
 const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm({
         defaultValues: {
             "fixed acidity": 7.4,
             "volatile acidity": 0.7,
@@ -116,6 +116,10 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
             "type": 0
         }
     });
+
+    React.useEffect(() => {
+        setValue('type', wineType);
+    }, [wineType, setValue]);
 
     const [sections, setSections] = React.useState({
         acidity: true,
@@ -137,9 +141,9 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                     <button
                         type="button"
                         onClick={() => setWineType(0)}
-                        className={`flex-1 py-3.5 px-4 rounded-xl font-bold transition-all duration-300 border-2 ${wineType === 0
-                            ? 'border-[#722F37] text-white shadow-[0_0_20px_rgba(114,47,55,0.4)] [background:linear-gradient(135deg,#722F37_0%,#a01e3d_100%)] transform scale-105'
-                            : 'border-slate-700 bg-slate-800/50 text-gray-400 hover:bg-slate-800 hover:text-gray-200'
+                        className={`flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 ${wineType === 0
+                            ? 'bg-red-600 border-red-400 text-white shadow-[0_0_20px_rgba(220,38,38,0.6)] ring-2 ring-red-500/30 transform scale-105 z-10'
+                            : 'bg-transparent border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-400 hover:bg-slate-800/50'
                             }`}
                     >
                         🍷 Red Wine
@@ -147,9 +151,9 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                     <button
                         type="button"
                         onClick={() => setWineType(1)}
-                        className={`flex-1 py-3.5 px-4 rounded-xl font-bold transition-all duration-300 border-2 ${wineType === 1
-                            ? 'border-[#f1a64b] text-[#5c3a1e] shadow-[0_0_20px_rgba(241,166,75,0.4)] [background:linear-gradient(135deg,#f1a64b_0%,#ffc470_100%)] transform scale-105'
-                            : 'border-slate-700 bg-slate-800/50 text-gray-400 hover:bg-slate-800 hover:text-gray-200'
+                        className={`flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 ${wineType === 1
+                            ? 'bg-amber-400 border-amber-300 text-black shadow-[0_0_20px_rgba(251,191,36,0.6)] ring-2 ring-amber-400/30 transform scale-105 z-10'
+                            : 'bg-transparent border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-400 hover:bg-slate-800/50'
                             }`}
                     >
                         🥂 White Wine

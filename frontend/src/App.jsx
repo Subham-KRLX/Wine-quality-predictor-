@@ -7,7 +7,7 @@ import PredictionResult from './components/PredictionResult';
 import FeatureImportanceChart from './components/FeatureImportanceChart';
 import useTheme from './hooks/useTheme';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
-import { Sparkles, Info, Wine, Home } from 'lucide-react';
+import { Sparkles, Info, Wine, Home, AlertCircle } from 'lucide-react';
 
 function PredictPage() {
     const [prediction, setPrediction] = useState(null);
@@ -44,7 +44,8 @@ function PredictPage() {
             const result = await response.json();
             setPrediction(result);
         } catch (err) {
-            setError(err.message);
+            console.error("Prediction failed:", err);
+            setError(err.message || "Failed to connect to the server. Please check your connection.");
         } finally {
             setIsLoading(false);
         }
@@ -101,9 +102,17 @@ function PredictPage() {
 
                                 <div className="lg:col-span-1 space-y-6">
                                     {error && (
-                                        <div className="dark:bg-red-950 dark:text-red-300 dark:border-red-800 bg-red-50 text-red-700 p-5 rounded-2xl border-2 border-red-200 shadow-sm">
-                                            <p className="font-semibold text-base">Error</p>
-                                            <p className="text-sm mt-1">{error}</p>
+                                        <div className="bg-red-500 text-white p-6 rounded-2xl shadow-xl border-4 border-red-700 mb-6 animate-pulse">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <AlertCircle className="h-6 w-6" />
+                                                <p className="font-bold text-lg">Prediction Failed</p>
+                                            </div>
+                                            <p className="text-white/90">{error}</p>
+                                            {error.includes("Failed to fetch") && (
+                                                <p className="text-sm mt-3 bg-red-800/50 p-2 rounded">
+                                                    <strong>Note:</strong> If you are on a deployed site, ensure the backend is running and reachable (check VITE_API_URL).
+                                                </p>
+                                            )}
                                         </div>
                                     )}
 
