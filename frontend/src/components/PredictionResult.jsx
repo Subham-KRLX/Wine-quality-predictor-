@@ -58,24 +58,23 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-6 rounded-2xl border-2 shadow-lg"
-                style={{ backgroundColor: qualityBg, borderColor: qualityBorder }}
+
+                className={`p-6 rounded-2xl border-2 shadow-lg ${quality_label === 'Good' ? 'bg-emerald-50 border-emerald-200 dark:bg-emerald-900/20 dark:border-emerald-700' : quality_label === 'Poor' ? 'bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-700' : 'bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-700'}`}
             >
                 <div className="flex items-center justify-center mb-4">
-                    <div className="p-3 rounded-full" style={{ backgroundColor: qualityColor }}>
+                    <div className={`p-3 rounded-full ${quality_label === 'Good' ? 'bg-emerald-400' : quality_label === 'Poor' ? 'bg-red-400' : 'bg-amber-400'}`}>
                         <Icon className="h-8 w-8 text-white" />
                     </div>
                 </div>
-                <h3 className="text-center text-sm font-semibold uppercase tracking-wider text-gray-600 mb-2">Predicted Quality</h3>
-                <div className="text-center text-6xl font-serif font-bold my-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-700 to-gray-900">
+                <h3 className="text-center text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Predicted Quality</h3>
+                <div className="text-center text-6xl font-serif font-bold my-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-700 to-gray-900 dark:from-white dark:to-gray-300">
                     {quality_score.toFixed(1)}
                 </div>
-                <div className="text-center text-xl font-medium mb-6 text-gray-700">{quality_label} Quality</div>
+                <div className="text-center text-xl font-medium mb-6 text-gray-700 dark:text-gray-200">{quality_label} Quality</div>
 
-                <div className="w-full bg-gray-200 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
                     <motion.div
-                        className="h-3 rounded-full"
-                        style={{ backgroundColor: qualityColor }}
+                        className={`h-3 rounded-full ${quality_label === 'Good' ? 'bg-emerald-400' : quality_label === 'Poor' ? 'bg-red-400' : 'bg-amber-400'}`}
                         initial={{ width: 0 }}
                         animate={{ width: `${percentage}%` }}
                         transition={{ duration: 1, ease: "easeOut" }}
@@ -92,38 +91,37 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="p-6 rounded-2xl border-2 shadow-lg"
-                style={{
-                    borderColor: wineBorder,
-                    background: `linear-gradient(135deg, ${wineLight} 0%, #ffffff 100%)`
-                }}
+
+                className={`p-6 rounded-2xl border-2 shadow-lg ${wineType === 0 ? 'border-[#f7d1d7] dark:border-wine-800 bg-gradient-to-br from-[#fdf4f5] to-white dark:from-slate-800 dark:to-slate-900' : 'border-[#fde9c6] dark:border-amber-800 bg-gradient-to-br from-[#fef5e3] to-white dark:from-slate-800 dark:to-slate-900'}`}
             >
                 <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 rounded-lg text-2xl shadow-md" style={{ backgroundColor: strength.color }}>
                         {strength.icon}
                     </div>
                     <div>
-                        <h3 className="text-lg font-serif font-bold" style={{ color: winePrimary }}>{strength.label}</h3>
-                        <p className="text-sm" style={{ color: wineText }}>{strength.description}</p>
-                    </div>
-                </div>
-
-                <div className="bg-white rounded-lg p-4 border" style={{ borderColor: wineBorder }}>
-                    <div className="flex items-start gap-2">
-                        <Wine className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: winePrimary }} />
                         <div>
-                            <h4 className="font-semibold text-sm mb-1" style={{ color: winePrimary }}>Tasting Note</h4>
-                            <p className="text-sm text-gray-700 leading-relaxed">{tastingNote}</p>
+                            <h3 className={`text-lg font-serif font-bold ${wineType === 0 ? 'text-[#722F37] dark:text-wine-300' : 'text-[#975823] dark:text-amber-300'}`}>{strength.label}</h3>
+                            <p className={`text-sm ${wineType === 0 ? 'text-[#881e3d] dark:text-wine-200' : 'text-[#975823] dark:text-amber-200'}`}>{strength.description}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-4 bg-white rounded-lg p-4 border" style={{ borderColor: wineBorder }}>
+                <div className={`bg-white dark:bg-slate-900 rounded-lg p-4 border ${wineType === 0 ? 'border-[#f7d1d7] dark:border-wine-800' : 'border-[#fde9c6] dark:border-amber-800'}`}>
                     <div className="flex items-start gap-2">
-                        <TrendingUp className="h-5 w-5 flex-shrink-0 mt-0.5" style={{ color: winePrimary }} />
+                        <Wine className={`h-5 w-5 flex-shrink-0 mt-0.5 ${wineType === 0 ? 'text-[#722F37] dark:text-wine-400' : 'text-[#f1a64b] dark:text-amber-400'}`} />
                         <div>
-                            <h4 className="font-semibold text-sm mb-1" style={{ color: winePrimary }}>Food Pairing Suggestions</h4>
-                            <p className="text-sm text-gray-700">{strength.pairing}</p>
+                            <h4 className={`font-semibold text-sm mb-1 ${wineType === 0 ? 'text-[#722F37] dark:text-wine-300' : 'text-[#f1a64b] dark:text-amber-300'}`}>Tasting Note</h4>
+                            <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{tastingNote}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={`mt-4 bg-white dark:bg-slate-900 rounded-lg p-4 border ${wineType === 0 ? 'border-[#f7d1d7] dark:border-wine-800' : 'border-[#fde9c6] dark:border-amber-800'}`}>
+                    <div className="flex items-start gap-2">
+                        <TrendingUp className={`h-5 w-5 flex-shrink-0 mt-0.5 ${wineType === 0 ? 'text-[#722F37] dark:text-wine-400' : 'text-[#f1a64b] dark:text-amber-400'}`} />
+                        <div>
+                            <h4 className={`font-semibold text-sm mb-1 ${wineType === 0 ? 'text-[#722F37] dark:text-wine-300' : 'text-[#f1a64b] dark:text-amber-300'}`}>Food Pairing Suggestions</h4>
+                            <p className="text-sm text-gray-700 dark:text-gray-300">{strength.pairing}</p>
                         </div>
                     </div>
                 </div>

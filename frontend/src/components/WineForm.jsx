@@ -6,9 +6,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Tooltip = ({ text, children }) => (
     <div className="group relative inline-block">
         {children}
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-56 text-white text-xs rounded-lg p-3 z-20 shadow-xl" style={{ backgroundColor: '#722F37' }}>
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block w-56 text-white text-xs rounded-lg p-3 z-20 shadow-xl bg-[#722F37] dark:bg-slate-700">
             {text}
-            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" style={{ borderTopColor: '#722F37' }}></div>
+            <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#722F37] dark:border-t-slate-700"></div>
         </div>
     </div>
 );
@@ -20,14 +20,14 @@ const InputField = ({ label, name, register, errors, tooltip, min, max, step, de
         <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                    <label className="block text-sm font-medium" style={{ color: '#722F37' }}>{label}</label>
+                    <label className="block text-sm font-medium text-[#722F37] dark:text-gray-200">{label}</label>
                     {tooltip && (
                         <Tooltip text={tooltip}>
                             <Info className="h-3.5 w-3.5 cursor-help hover:opacity-70 transition" style={{ color: '#881e3d' }} />
                         </Tooltip>
                     )}
                 </div>
-                {useSlider && <span className="text-xs font-mono" style={{ color: '#881e3d' }}>{value}</span>}
+                {useSlider && <span className="text-xs font-mono text-[#881e3d] dark:text-gray-400">{value}</span>}
             </div>
 
             {useSlider ? (
@@ -45,8 +45,7 @@ const InputField = ({ label, name, register, errors, tooltip, min, max, step, de
                             max: { value: max, message: `Max ${max}` },
                             valueAsNumber: true
                         })}
-                        className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-                        style={{ backgroundColor: '#f7d1d7', accentColor: '#722F37' }}
+                        className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-[#f7d1d7] dark:bg-slate-600 accent-[#722F37] dark:accent-amber-500"
                     />
                     <div className="flex justify-between text-xs text-gray-500">
                         <span>{min}</span>
@@ -63,9 +62,8 @@ const InputField = ({ label, name, register, errors, tooltip, min, max, step, de
                         min: { value: min, message: `Min ${min}` },
                         max: { value: max, message: `Max ${max}` }
                     })}
-                    className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 focus:outline-none transition-all bg-white ${errors[name] ? 'border-red-500 bg-red-50' : 'border-gray-300 hover:border-gray-400'
-                        }`}
-                    style={!errors[name] ? { borderColor: '#f7d1d7', focusRingColor: '#722F37' } : {}}
+                    className={`w-full px-3 py-2.5 border-2 rounded-lg focus:ring-2 focus:outline-none transition-all bg-white dark:bg-slate-700 dark:text-white ${errors[name] ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-gray-300 hover:border-gray-400 dark:border-slate-600'
+                        } ${!errors[name] ? 'border-[#f7d1d7] dark:border-slate-600 focus:ring-[#722F37] dark:focus:ring-amber-500' : ''}`}
                 />
             )}
             {errors[name] && <span className="text-xs text-red-500 mt-1 block">{errors[name].message}</span>}
@@ -74,15 +72,14 @@ const InputField = ({ label, name, register, errors, tooltip, min, max, step, de
 };
 
 const InputSection = ({ title, children, isOpen, toggle }) => (
-    <div className="bg-white border-2 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow" style={{ borderColor: '#f7d1d7' }}>
+    <div className="bg-white dark:bg-slate-800 border-2 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border-[#f7d1d7] dark:border-slate-700">
         <button
             type="button"
             onClick={toggle}
-            className="w-full px-5 py-4 hover:opacity-90 transition-all flex justify-between items-center"
-            style={{ background: 'linear-gradient(135deg, #fdf4f5 0%, #fef5e3 100%)' }}
+            className="w-full px-5 py-4 hover:opacity-90 transition-all flex justify-between items-center [background:linear-gradient(135deg,#fdf4f5_0%,#fef5e3_100%)] dark:[background:transparent] dark:bg-slate-800"
         >
-            <h3 className="font-serif font-semibold text-lg" style={{ color: '#722F37' }}>{title}</h3>
-            {isOpen ? <ChevronUp className="h-5 w-5" style={{ color: '#881e3d' }} /> : <ChevronDown className="h-5 w-5" style={{ color: '#881e3d' }} />}
+            <h3 className="font-serif font-semibold text-lg text-[#722F37] dark:text-white">{title}</h3>
+            {isOpen ? <ChevronUp className="h-5 w-5 text-[#881e3d] dark:text-gray-400" /> : <ChevronDown className="h-5 w-5 text-[#881e3d] dark:text-gray-400" />}
         </button>
         <AnimatePresence>
             {isOpen && (
@@ -134,32 +131,22 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Wine Type Selector */}
-            <div className="bg-white border-2 rounded-xl p-5 shadow-sm" style={{ borderColor: '#f7d1d7' }}>
-                <label className="block text-sm font-medium mb-3" style={{ color: '#722F37' }}>Wine Type</label>
+            <div className="bg-white dark:bg-slate-800 border-2 rounded-xl p-5 shadow-sm border-[#f7d1d7] dark:border-slate-700">
+                <label className="block text-sm font-medium mb-3 text-[#722F37] dark:text-gray-200">Wine Type</label>
                 <div className="flex gap-3">
                     <button
                         type="button"
                         onClick={() => setWineType(0)}
-                        className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${wineType === 0 ? 'text-white shadow-md' : 'hover:opacity-80'
+                        className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${wineType === 0 ? 'text-white shadow-md [background:linear-gradient(135deg,#722F37_0%,#881e3d_100%)]' : 'hover:opacity-80 bg-[#fdf4f5] dark:bg-slate-700 text-[#722F37] dark:text-gray-300'
                             }`}
-                        style={
-                            wineType === 0
-                                ? { background: 'linear-gradient(135deg, #722F37 0%, #881e3d 100%)' }
-                                : { backgroundColor: '#fdf4f5', color: '#722F37' }
-                        }
                     >
                         🍷 Red Wine
                     </button>
                     <button
                         type="button"
                         onClick={() => setWineType(1)}
-                        className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${wineType === 1 ? 'text-white shadow-md' : 'hover:opacity-80'
+                        className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${wineType === 1 ? 'text-white shadow-md [background:linear-gradient(135deg,#f1a64b_0%,#e28a2f_100%)]' : 'hover:opacity-80 bg-[#fef5e3] dark:bg-slate-700 text-[#bd6f25] dark:text-gray-300'
                             }`}
-                        style={
-                            wineType === 1
-                                ? { background: 'linear-gradient(135deg, #f1a64b 0%, #e28a2f 100%)' }
-                                : { backgroundColor: '#fef5e3', color: '#bd6f25' }
-                        }
                     >
                         🥂 White Wine
                     </button>
@@ -197,12 +184,10 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
             <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full font-semibold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center shadow-lg text-white"
-                style={
-                    wineType === 0
-                        ? { background: 'linear-gradient(135deg, #722F37 0%, #881e3d 100%)' }
-                        : { background: 'linear-gradient(135deg, #f1a64b 0%, #e28a2f 100%)' }
-                }
+                className={`w-full font-semibold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center shadow-lg text-white ${wineType === 0
+                    ? '[background:linear-gradient(135deg,#722F37_0%,#881e3d_100%)]'
+                    : '[background:linear-gradient(135deg,#f1a64b_0%,#e28a2f_100%)]'
+                    }`}
             >
                 {isLoading ? (
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>

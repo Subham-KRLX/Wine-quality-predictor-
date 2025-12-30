@@ -29,15 +29,12 @@ const FeatureImportanceChart = ({ wineType }) => {
 
     return (
         <div
-            className="p-6 rounded-2xl border-2 shadow-lg"
-            style={{
-                borderColor: borderColor,
-                background: `linear-gradient(135deg, ${bgColor} 0%, #ffffff 100%)`
-            }}
+
+            className={`p-6 rounded-2xl border-2 shadow-lg ${wineType === 0 ? 'border-[#f7d1d7] dark:border-wine-800 bg-gradient-to-br from-[#fdf4f5] to-white dark:from-slate-800 dark:to-slate-900' : 'border-[#fde9c6] dark:border-amber-800 bg-gradient-to-br from-[#fef5e3] to-white dark:from-slate-800 dark:to-slate-900'}`}
         >
             <div className="flex items-center gap-2 mb-5">
-                <TrendingUp className="h-5 w-5" style={{ color: color }} />
-                <h3 className="text-lg font-serif font-bold" style={{ color: textColor }}>
+                <TrendingUp className={`h-5 w-5 ${wineType === 0 ? 'text-[#722F37] dark:text-wine-400' : 'text-[#f1a64b] dark:text-amber-400'}`} />
+                <h3 className={`text-lg font-serif font-bold ${wineType === 0 ? 'text-[#881e3d] dark:text-wine-300' : 'text-[#975823] dark:text-amber-300'}`}>
                     Key Quality Factors
                 </h3>
             </div>
@@ -69,7 +66,7 @@ const FeatureImportanceChart = ({ wineType }) => {
                 </ResponsiveContainer>
             </div>
 
-            <p className="text-xs text-gray-500 mt-3 text-center italic">
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-3 text-center italic">
                 Features with the highest impact on quality prediction
             </p>
         </div>
