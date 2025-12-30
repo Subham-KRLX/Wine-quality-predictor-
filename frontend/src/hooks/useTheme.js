@@ -1,33 +1,17 @@
 import { useState, useEffect } from 'react';
 
 const useTheme = () => {
-    const [isDark, setIsDark] = useState(false);
+    // Always false for light mode
+    const isDark = false;
 
     useEffect(() => {
-        // Check if user has a saved preference
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
-        setIsDark(shouldBeDark);
-        
-        if (shouldBeDark) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        // Enforce light mode on mount
+        document.documentElement.classList.remove('dark');
+        localStorage.removeItem('theme');
     }, []);
 
     const toggleTheme = () => {
-        const newIsDark = !isDark;
-        setIsDark(newIsDark);
-        localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
-        
-        if (newIsDark) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
+        // No-op
     };
 
     return { isDark, toggleTheme };

@@ -172,19 +172,19 @@ function PredictPage() {
     );
 }
 
-const HomePageWrapper = ({ isDark, toggleTheme }) => {
+const HomePageWrapper = () => {
     const navigate = useNavigate();
-    return <HomePage onGetStarted={() => navigate('/predict')} isDark={isDark} toggleTheme={toggleTheme} />;
+    return <HomePage onGetStarted={() => navigate('/predict')} />;
 };
 
 function App() {
-    const { isDark, toggleTheme } = useTheme();
+
 
     return (
         <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<HomePageWrapper isDark={isDark} toggleTheme={toggleTheme} />} />
+                    <Route path="/" element={<HomePageWrapper />} />
                     <Route path="/predict" element={<PredictPage />} />
                 </Routes>
             </Layout>

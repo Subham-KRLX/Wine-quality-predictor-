@@ -1,5 +1,5 @@
 import React from 'react';
-import ThemeToggle from '../components/ThemeToggle';
+
 import { motion } from 'framer-motion';
 import { Wine, Sparkles, TrendingUp, ArrowRight, Award, Shield, BarChart3 } from 'lucide-react';
 
