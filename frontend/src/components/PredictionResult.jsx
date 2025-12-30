@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Wine, Sparkles, TrendingUp, AlertCircle, XCircle } from 'lucide-react';
+import { gsap } from 'gsap';
 
 const getWineStrength = (alcohol, wineType) => {
     // wineType: 0 for Red, 1 for White
@@ -47,9 +48,56 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
         return `Simple ${wineTypeName} with ${strength.label.toLowerCase()} structure. Best enjoyed chilled and consumed young.`;
     };
 
+
     const { quality_score, quality_label } = result;
     const strength = getWineStrength(alcoholLevel || 10, wineType);
     const tastingNote = getTastingNote(quality_score, alcoholLevel || 10, wineType);
+
+    // GSAP Animation Refs
+    const cardRef = useRef(null);
+    const scoreRef = useRef(null);
+    const labelRef = useRef(null);
+    const progressRef = useRef(null);
+    const strengthCardRef = useRef(null);
+
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+            const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+            tl.from(cardRef.current, {
+                scale: 0.8,
+                opacity: 0,
+                y: 50,
+                duration: 0.6
+            })
+                .from(scoreRef.current, {
+                    scale: 0,
+                    opacity: 0,
+                    rotation: -180,
+                    duration: 0.8,
+                    ease: 'elastic.out(1, 0.5)'
+                }, '-=0.3')
+                .from(labelRef.current, {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.4
+                }, '-=0.4')
+                .from(progressRef.current, {
+                    scaleX: 0,
+                    transformOrigin: 'left',
+                    duration: 1,
+                    ease: 'power2.out'
+                }, '-=0.3')
+                .from(strengthCardRef.current, {
+                    x: -50,
+                    opacity: 0,
+                    duration: 0.6
+                }, '-=0.5');
+        });
+
+        return () => ctx.revert();
+    }, [result]);
+
 
     let qualityColor = "#fbbf24"; // yellow
     let qualityBg = "#fffbeb";
@@ -80,6 +128,7 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
         <div className="space-y-4">
             {/* Quality Score Card */}
             <motion.div
+                ref={cardRef}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
 
@@ -92,6 +141,7 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
                 </div>
                 <h3 className="text-center text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Predicted Quality</h3>
                 <div
+                    ref={scoreRef}
                     className="text-center text-7xl font-serif font-bold my-4 drop-shadow-2xl"
                     style={{
                         color: quality_label === 'Good' ? '#34d399' : quality_label === 'Poor' ? '#f87171' : '#fbbf24',
@@ -100,9 +150,9 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
                 >
                     {quality_score.toFixed(1)}
                 </div>
-                <div className="text-center text-xl font-medium mb-6 text-gray-700 dark:text-gray-200">{quality_label} Quality</div>
+                <div ref={labelRef} className="text-center text-xl font-medium mb-6 text-gray-700 dark:text-gray-200">{quality_label} Quality</div>
 
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
+                <div ref={progressRef} className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-2 overflow-hidden shadow-inner">
                     <motion.div
                         className={`h-3 rounded-full ${quality_label === 'Good' ? 'bg-emerald-400' : quality_label === 'Poor' ? 'bg-red-400' : 'bg-amber-400'}`}
                         initial={{ width: 0 }}
@@ -118,6 +168,7 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
 
             {/* Wine Strength Card */}
             <motion.div
+                ref={strengthCardRef}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}

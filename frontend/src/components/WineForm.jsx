@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { ChevronDown, ChevronUp, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { gsap } from 'gsap';
 
 const Tooltip = ({ text, children }) => (
     <div className="group relative inline-block">
@@ -169,6 +170,39 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
         setSections(prev => ({ ...prev, [section]: !prev[section] }));
     };
 
+    // Refs for wine buttons
+    const redWineRef = useRef(null);
+    const whiteWineRef = useRef(null);
+
+    const handleWineHover = (ref, isEntering) => {
+        if (isEntering) {
+            gsap.to(ref.current, {
+                scale: 1.08,
+                y: -3,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        } else {
+            gsap.to(ref.current, {
+                scale: wineType === (ref === redWineRef ? 0 : 1) ? 1.05 : 1,
+                y: 0,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        }
+    };
+
+    const handleWineClick = (ref) => {
+        gsap.fromTo(ref.current,
+            { scale: 0.95 },
+            {
+                scale: 1.05,
+                duration: 0.4,
+                ease: 'elastic.out(1, 0.3)'
+            }
+        );
+    };
+
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Wine Type Selector */}
@@ -176,8 +210,40 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                 <label className="block text-sm font-medium mb-3 text-[#722F37] dark:text-gray-200">Wine Type</label>
                 <div className="flex gap-3">
                     <button
+                        ref={redWineRef}
                         type="button"
-                        onClick={() => setWineType(0)}
+                        onClick={() => {
+                            setWineType(0);
+                            handleWineClick(redWineRef);
+                        }}
+                        onMouseEnter={() => handleWineHover(redWineRef, true)}
+                        onMouseLeave={() => handleWineHover(redWineRef, false)}
+                        className="flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 shadow-lg"
+                        style={wineType === 0 ? {
+                            backgroundColor: '#DC2626', // Bright Red
+                            borderColor: '#F87171',
+                            color: '#FFFFFF',
+                            transform: 'scale(1.05)',
+                            zIndex: 10,
+                            boxShadow: '0 0 20px rgba(220, 38, 38, 0.6)'
+                        } : {
+                            backgroundColor: 'transparent',
+                            borderColor: '#334155',
+                            color: '#94A3B8',
+                            opacity: 0.6
+                        }}
+                    >
+                        🍷 Red Wine
+                    </button>
+                    <button
+                        ref={whiteWineRef}
+                        type="button"
+                        onClick={() => {
+                            setWineType(1);
+                            handleWineClick(whiteWineRef);
+                        }}
+                        onMouseEnter={() => handleWineHover(whiteWineRef, true)}
+                        onMouseLeave={() => handleWineHover(whiteWineRef, false)}
                         className="flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 shadow-lg"
                         style={wineType === 0 ? {
                             backgroundColor: '#DC2626', // Bright Red
