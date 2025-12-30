@@ -27,7 +27,8 @@ const ThemeToggle = ({ isDark, toggleTheme, navBar = false }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={toggleTheme}
-            className="fixed top-4 right-4 z-50 p-3 rounded-full glass hover:bg-white/20 dark:hover:bg-black/30 border-2 border-white/40 dark:border-white/20 transition-all shadow-lg"
+            className="fixed z-50 p-3 rounded-full glass hover:bg-white/20 dark:hover:bg-black/30 border-2 border-white/40 dark:border-white/20 transition-all shadow-lg"
+            style={{ position: 'fixed', top: '1rem', right: '1rem' }}
             aria-label="Toggle dark mode"
         >
             {isDark ? (

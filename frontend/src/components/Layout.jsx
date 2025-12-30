@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wine } from 'lucide-react';
+
 import useTheme from '../hooks/useTheme';
 import ThemeToggle from './ThemeToggle';
 
