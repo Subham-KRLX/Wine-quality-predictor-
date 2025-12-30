@@ -2,29 +2,53 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Wine, Sparkles, TrendingUp, AlertCircle, XCircle } from 'lucide-react';
 
-const getWineStrength = (alcohol) => {
-    if (alcohol < 10) return { label: 'Light-bodied', icon: '🍃', color: '#60a5fa', description: 'Delicate and easy-drinking', pairing: 'Salads, seafood, light appetizers' };
-    if (alcohol < 12.5) return { label: 'Medium-bodied', icon: '🌿', color: '#34d399', description: 'Balanced and versatile', pairing: 'Poultry, pasta, soft cheeses' };
-    return { label: 'Full-bodied', icon: '🔥', color: '#f97316', description: 'Rich and robust', pairing: 'Red meat, aged cheese, hearty stews' };
-};
-
-const getTastingNote = (quality_score, alcohol, wineType) => {
-    const strength = getWineStrength(alcohol);
-    const wineTypeName = wineType === 0 ? 'red wine' : 'white wine';
-
-    if (quality_score >= 7) {
-        return `Exceptional ${wineTypeName} with ${strength.label.toLowerCase()} character. Expect complex flavors and a smooth finish. Perfect for special occasions.`;
-    } else if (quality_score >= 5) {
-        return `Pleasant ${wineTypeName} with ${strength.label.toLowerCase()} profile. Good everyday drinking wine with balanced characteristics.`;
+const getWineStrength = (alcohol, wineType) => {
+    // wineType: 0 for Red, 1 for White
+    if (alcohol < 11) {
+        return {
+            label: 'Light-bodied',
+            icon: '🍃',
+            color: '#60a5fa',
+            description: 'Delicate and easy-drinking',
+            pairing: wineType === 0 ? 'Charcuterie, grilled vegetables, mushroom risotto' : 'Fresh salads, sushi, raw shellfish'
+        };
     }
-    return `Simple ${wineTypeName} with ${strength.label.toLowerCase()} structure. Best enjoyed chilled and consumed young.`;
+    if (alcohol < 13.5) {
+        return {
+            label: 'Medium-bodied',
+            icon: '🌿',
+            color: '#34d399',
+            description: 'Balanced and versatile',
+            pairing: wineType === 0 ? 'Roasted chicken, pork chops, burgers' : 'Grilled fish, creamy pasta, roast chicken'
+        };
+    }
+    return {
+        label: 'Full-bodied',
+        icon: '🔥',
+        color: '#f97316',
+        description: 'Rich and robust',
+        pairing: wineType === 0 ? 'Steak, lamb, hearty stews, aged cheese' : 'Lobster, rich chowders, soft ripened cheese'
+    };
 };
+
 
 const PredictionResult = ({ result, wineType, alcoholLevel }) => {
     if (!result) return null;
 
+    const getTastingNote = (quality_score, alcohol, wineType) => {
+        const strength = getWineStrength(alcohol, wineType);
+        const wineTypeName = wineType === 0 ? 'red wine' : 'white wine';
+
+        if (quality_score >= 7) {
+            return `Exceptional ${wineTypeName} with ${strength.label.toLowerCase()} character. Expect complex flavors and a smooth finish. Perfect for special occasions.`;
+        } else if (quality_score >= 5) {
+            return `Pleasant ${wineTypeName} with ${strength.label.toLowerCase()} profile. Good everyday drinking wine with balanced characteristics.`;
+        }
+        return `Simple ${wineTypeName} with ${strength.label.toLowerCase()} structure. Best enjoyed chilled and consumed young.`;
+    };
+
     const { quality_score, quality_label } = result;
-    const strength = getWineStrength(alcoholLevel || 10);
+    const strength = getWineStrength(alcoholLevel || 10, wineType);
     const tastingNote = getTastingNote(quality_score, alcoholLevel || 10, wineType);
 
     let qualityColor = "#fbbf24"; // yellow
@@ -67,7 +91,13 @@ const PredictionResult = ({ result, wineType, alcoholLevel }) => {
                     </div>
                 </div>
                 <h3 className="text-center text-sm font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Predicted Quality</h3>
-                <div className="text-center text-6xl font-serif font-bold my-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-700 to-gray-900 dark:from-white dark:to-gray-300">
+                <div
+                    className="text-center text-7xl font-serif font-bold my-4 drop-shadow-2xl"
+                    style={{
+                        color: quality_label === 'Good' ? '#34d399' : quality_label === 'Poor' ? '#f87171' : '#fbbf24',
+                        textShadow: '0 0 30px rgba(0,0,0,0.5)'
+                    }}
+                >
                     {quality_score.toFixed(1)}
                 </div>
                 <div className="text-center text-xl font-medium mb-6 text-gray-700 dark:text-gray-200">{quality_label} Quality</div>

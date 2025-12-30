@@ -141,20 +141,40 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                     <button
                         type="button"
                         onClick={() => setWineType(0)}
-                        className={`flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 ${wineType === 0
-                            ? 'bg-red-600 border-red-400 text-white shadow-[0_0_20px_rgba(220,38,38,0.6)] ring-2 ring-red-500/30 transform scale-105 z-10'
-                            : 'bg-transparent border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-400 hover:bg-slate-800/50'
-                            }`}
+                        className="flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 shadow-lg"
+                        style={wineType === 0 ? {
+                            backgroundColor: '#DC2626', // Bright Red
+                            borderColor: '#F87171',
+                            color: '#FFFFFF',
+                            transform: 'scale(1.05)',
+                            zIndex: 10,
+                            boxShadow: '0 0 20px rgba(220, 38, 38, 0.6)'
+                        } : {
+                            backgroundColor: 'transparent',
+                            borderColor: '#334155',
+                            color: '#94A3B8',
+                            opacity: 0.6
+                        }}
                     >
                         🍷 Red Wine
                     </button>
                     <button
                         type="button"
                         onClick={() => setWineType(1)}
-                        className={`flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 ${wineType === 1
-                            ? 'bg-amber-400 border-amber-300 text-black shadow-[0_0_20px_rgba(251,191,36,0.6)] ring-2 ring-amber-400/30 transform scale-105 z-10'
-                            : 'bg-transparent border-slate-700 text-slate-500 hover:border-slate-600 hover:text-slate-400 hover:bg-slate-800/50'
-                            }`}
+                        className="flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 shadow-lg"
+                        style={wineType === 1 ? {
+                            backgroundColor: '#FBBF24', // Bright Amber
+                            borderColor: '#FCD34D',
+                            color: '#000000',
+                            transform: 'scale(1.05)',
+                            zIndex: 10,
+                            boxShadow: '0 0 20px rgba(251, 191, 36, 0.6)'
+                        } : {
+                            backgroundColor: 'transparent',
+                            borderColor: '#334155',
+                            color: '#94A3B8',
+                            opacity: 0.6
+                        }}
                     >
                         🥂 White Wine
                     </button>
