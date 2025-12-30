@@ -71,33 +71,70 @@ const InputField = ({ label, name, register, errors, tooltip, min, max, step, de
     );
 };
 
-const InputSection = ({ title, children, isOpen, toggle }) => (
-    <div className="bg-white dark:bg-slate-800 border-2 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border-[#f7d1d7] dark:border-slate-700">
-        <button
-            type="button"
-            onClick={toggle}
-            className="w-full px-5 py-4 hover:opacity-90 transition-all flex justify-between items-center [background:linear-gradient(135deg,#fdf4f5_0%,#fef5e3_100%)] dark:[background:transparent] dark:bg-slate-800"
-        >
-            <h3 className="font-serif font-semibold text-lg text-[#722F37] dark:text-white">{title}</h3>
-            {isOpen ? <ChevronUp className="h-5 w-5 text-[#881e3d] dark:text-gray-400" /> : <ChevronDown className="h-5 w-5 text-[#881e3d] dark:text-gray-400" />}
-        </button>
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                >
-                    <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-x-4">
-                        {children}
-                    </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    </div>
-);
+const InputSection = ({ title, children, isOpen, toggle, theme = 'default' }) => {
+    const themeStyles = {
+        acidity: {
+            bg: 'bg-gradient-to-r from-yellow-50 to-lime-50 dark:from-yellow-900/20 dark:to-lime-900/20',
+            border: 'border-yellow-400 dark:border-yellow-600',
+            text: 'text-yellow-700 dark:text-yellow-400',
+            icon: 'text-yellow-600 dark:text-yellow-500'
+        },
+        sulfur: {
+            bg: 'bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20',
+            border: 'border-cyan-400 dark:border-cyan-600',
+            text: 'text-cyan-700 dark:text-cyan-400',
+            icon: 'text-cyan-600 dark:text-cyan-500'
+        },
+        alcohol: {
+            bg: 'bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20',
+            border: 'border-purple-400 dark:border-purple-600',
+            text: 'text-purple-700 dark:text-purple-400',
+            icon: 'text-purple-600 dark:text-purple-500'
+        },
+        sugar: {
+            bg: 'bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-900/20 dark:to-rose-900/20',
+            border: 'border-pink-400 dark:border-pink-600',
+            text: 'text-pink-700 dark:text-pink-400',
+            icon: 'text-pink-600 dark:text-pink-500'
+        },
+        default: {
+            bg: '[background:linear-gradient(135deg,#fdf4f5_0%,#fef5e3_100%)] dark:bg-slate-800',
+            border: 'border-[#f7d1d7] dark:border-slate-700',
+            text: 'text-[#722F37] dark:text-white',
+            icon: 'text-[#881e3d] dark:text-gray-400'
+        }
+    };
+
+    const style = themeStyles[theme] || themeStyles.default;
+
+    return (
+        <div className={`bg-white dark:bg-slate-800 border-2 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all ${style.border}`}>
+            <button
+                type="button"
+                onClick={toggle}
+                className={`w-full px-5 py-4 hover:opacity-90 transition-all flex justify-between items-center ${style.bg}`}
+            >
+                <h3 className={`font-serif font-bold text-xl ${style.text}`}>{title}</h3>
+                {isOpen ? <ChevronUp className={`h-5 w-5 ${style.icon}`} /> : <ChevronDown className={`h-5 w-5 ${style.icon}`} />}
+            </button>
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                    >
+                        <div className="p-5 grid grid-cols-1 md:grid-cols-2 gap-x-4">
+                            {children}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
 
 const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
     const { register, handleSubmit, setValue, formState: { errors } } = useForm({
@@ -183,7 +220,7 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
             </div>
 
             {/* Acidity Section */}
-            <InputSection title="🍋 Acidity & pH" isOpen={sections.acidity} toggle={() => toggleSection('acidity')}>
+            <InputSection title="🍋 Acidity & pH" isOpen={sections.acidity} toggle={() => toggleSection('acidity')} theme="acidity">
                 <InputField label="Fixed Acidity" name="fixed acidity" register={register} errors={errors} min={4} max={16} defaultValue={7.4} tooltip="Primary acids in wine - tartaric, succinic, citric, and malic" />
                 <InputField label="Volatile Acidity" name="volatile acidity" register={register} errors={errors} min={0.1} max={2} defaultValue={0.7} tooltip="Gaseous acids that can affect wine aroma" />
                 <InputField label="Citric Acid" name="citric acid" register={register} errors={errors} min={0} max={1} defaultValue={0.0} tooltip="Adds freshness and flavor to wine" useSlider />
@@ -191,20 +228,20 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
             </InputSection>
 
             {/* Sulfur Section */}
-            <InputSection title="🧪 Sulfur Dioxide" isOpen={sections.sulfur} toggle={() => toggleSection('sulfur')}>
+            <InputSection title="🧪 Sulfur Dioxide" isOpen={sections.sulfur} toggle={() => toggleSection('sulfur')} theme="sulfur">
                 <InputField label="Free SO₂" name="free sulfur dioxide" register={register} errors={errors} min={1} max={72} defaultValue={11.0} tooltip="Prevents microbial growth and oxidation" />
                 <InputField label="Total SO₂" name="total sulfur dioxide" register={register} errors={errors} min={6} max={300} defaultValue={34.0} tooltip="Total amount of free and bound sulfur dioxide" />
                 <InputField label="Sulphates" name="sulphates" register={register} errors={errors} min={0.2} max={2} defaultValue={0.56} tooltip="Wine additive that contributes to SO₂ levels" useSlider />
             </InputSection>
 
             {/* Alcohol Section */}
-            <InputSection title="🍾 Alcohol & Density" isOpen={sections.alcohol} toggle={() => toggleSection('alcohol')}>
+            <InputSection title="🍾 Alcohol & Density" isOpen={sections.alcohol} toggle={() => toggleSection('alcohol')} theme="alcohol">
                 <InputField label="Alcohol (%)" name="alcohol" register={register} errors={errors} min={8} max={15} defaultValue={9.4} tooltip="Percentage of alcohol content" useSlider />
                 <InputField label="Density" name="density" register={register} errors={errors} min={0.99} max={1.01} step="0.0001" defaultValue={0.9978} tooltip="Density of wine relative to water" />
             </InputSection>
 
             {/* Other Section */}
-            <InputSection title="🍬 Sugar & Minerals" isOpen={sections.other} toggle={() => toggleSection('other')}>
+            <InputSection title="🍬 Sugar & Minerals" isOpen={sections.other} toggle={() => toggleSection('other')} theme="sugar">
                 <InputField label="Residual Sugar" name="residual sugar" register={register} errors={errors} min={0} max={20} defaultValue={1.9} tooltip="Sugar remaining after fermentation" useSlider />
                 <InputField label="Chlorides" name="chlorides" register={register} errors={errors} min={0.01} max={0.6} defaultValue={0.076} tooltip="Amount of salt in the wine" />
             </InputSection>
@@ -212,10 +249,17 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
             <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full font-semibold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center shadow-lg text-white ${wineType === 0
-                    ? '[background:linear-gradient(135deg,#722F37_0%,#881e3d_100%)]'
-                    : '[background:linear-gradient(135deg,#f1a64b_0%,#e28a2f_100%)]'
-                    }`}
+                className="w-full font-bold text-xl py-5 px-8 rounded-2xl transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center shadow-2xl border-2 animate-pulse"
+                style={{
+                    background: wineType === 0
+                        ? 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)'
+                        : 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                    borderColor: wineType === 0 ? '#FCA5A5' : '#FCD34D',
+                    color: '#FFFFFF',
+                    boxShadow: wineType === 0
+                        ? '0 0 30px rgba(220, 38, 38, 0.7), 0 10px 25px rgba(0, 0, 0, 0.3)'
+                        : '0 0 30px rgba(245, 158, 11, 0.7), 0 10px 25px rgba(0, 0, 0, 0.3)'
+                }}
             >
                 {isLoading ? (
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
