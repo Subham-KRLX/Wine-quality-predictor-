@@ -137,7 +137,9 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                     <button
                         type="button"
                         onClick={() => setWineType(0)}
-                        className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${wineType === 0 ? 'text-white shadow-md [background:linear-gradient(135deg,#722F37_0%,#881e3d_100%)]' : 'hover:opacity-80 bg-[#fdf4f5] dark:bg-slate-700 text-[#722F37] dark:text-gray-300'
+                        className={`flex-1 py-3.5 px-4 rounded-xl font-bold transition-all duration-300 border-2 ${wineType === 0
+                            ? 'border-[#722F37] text-white shadow-[0_0_20px_rgba(114,47,55,0.4)] [background:linear-gradient(135deg,#722F37_0%,#a01e3d_100%)] transform scale-105'
+                            : 'border-slate-700 bg-slate-800/50 text-gray-400 hover:bg-slate-800 hover:text-gray-200'
                             }`}
                     >
                         🍷 Red Wine
@@ -145,7 +147,9 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                     <button
                         type="button"
                         onClick={() => setWineType(1)}
-                        className={`flex-1 py-3 px-4 rounded-lg font-medium transition-all ${wineType === 1 ? 'text-white shadow-md [background:linear-gradient(135deg,#f1a64b_0%,#e28a2f_100%)]' : 'hover:opacity-80 bg-[#fef5e3] dark:bg-slate-700 text-[#bd6f25] dark:text-gray-300'
+                        className={`flex-1 py-3.5 px-4 rounded-xl font-bold transition-all duration-300 border-2 ${wineType === 1
+                            ? 'border-[#f1a64b] text-[#5c3a1e] shadow-[0_0_20px_rgba(241,166,75,0.4)] [background:linear-gradient(135deg,#f1a64b_0%,#ffc470_100%)] transform scale-105'
+                            : 'border-slate-700 bg-slate-800/50 text-gray-400 hover:bg-slate-800 hover:text-gray-200'
                             }`}
                     >
                         🥂 White Wine
