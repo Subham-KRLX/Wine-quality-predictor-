@@ -245,26 +245,6 @@ const WineForm = ({ onSubmit, isLoading, wineType, setWineType }) => {
                         onMouseEnter={() => handleWineHover(whiteWineRef, true)}
                         onMouseLeave={() => handleWineHover(whiteWineRef, false)}
                         className="flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 shadow-lg"
-                        style={wineType === 0 ? {
-                            backgroundColor: '#DC2626', // Bright Red
-                            borderColor: '#F87171',
-                            color: '#FFFFFF',
-                            transform: 'scale(1.05)',
-                            zIndex: 10,
-                            boxShadow: '0 0 20px rgba(220, 38, 38, 0.6)'
-                        } : {
-                            backgroundColor: 'transparent',
-                            borderColor: '#334155',
-                            color: '#94A3B8',
-                            opacity: 0.6
-                        }}
-                    >
-                        🍷 Red Wine
-                    </button>
-                    <button
-                        type="button"
-                        onClick={() => setWineType(1)}
-                        className="flex-1 py-4 px-6 rounded-2xl font-bold text-lg transition-all duration-300 border-2 shadow-lg"
                         style={wineType === 1 ? {
                             backgroundColor: '#FBBF24', // Bright Amber
                             borderColor: '#FCD34D',
