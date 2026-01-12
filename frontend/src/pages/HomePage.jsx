@@ -1,13 +1,12 @@
 import React from 'react';
-
 import { motion } from 'framer-motion';
 import { Wine, Sparkles, TrendingUp, ArrowRight, Award, Shield, BarChart3 } from 'lucide-react';
 
 const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
     return (
-        <div className="min-h-screen dark:bg-slate-950 transition-colors duration-300 bg-[#F5F5F5]">
+        <div className="min-h-screen transition-colors duration-300" style={{ backgroundColor: '#1a0a1e' }}>
             {/* Hero Section with Wine → Amber Gradient */}
-            <div className="relative overflow-hidden text-white dark:bg-gradient-to-b dark:from-slate-900 dark:to-slate-800 [background:linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
+            <div className="relative overflow-hidden text-white" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
                 {/* Animated background elements */}
                 <div className="absolute inset-0 overflow-hidden opacity-20">
                     <div className="absolute top-0 -right-1/4 w-1/2 h-1/2 bg-amber-400 rounded-full blur-3xl animate-pulse"></div>
@@ -58,7 +57,7 @@ const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4, duration: 0.8 }}
                         >
-                            <p className="text-2xl sm:text-3xl text-amber-100 mb-4 font-light tracking-wide">
+                            <p className="text-2xl sm:text-3xl text-white dark:text-amber-100 mb-4 font-light tracking-wide">
                                 AI-Powered Wine Quality Analysis
                             </p>
                             <p className="text-lg sm:text-xl dark:text-gray-300 text-white/90 mb-14 max-w-3xl mx-auto leading-relaxed">
@@ -87,7 +86,7 @@ const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 onClick={() => document.getElementById('features').scrollIntoView({ behavior: 'smooth' })}
-                                className="px-10 py-5 glass-dark hover:bg-white/20 rounded-full font-semibold text-lg border-2 border-white/40 transition-all flex items-center justify-center gap-2"
+                                className="px-10 py-5 glass-dark hover:bg-white/20 rounded-full font-semibold text-lg border-2 border-white/40 transition-all flex items-center justify-center gap-2 text-white"
                             >
                                 <BarChart3 className="h-5 w-5" />
                                 View Demo
@@ -108,7 +107,7 @@ const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
             </div>
 
             {/* Features Section */}
-            <div id="features" className="py-28 dark:bg-slate-900 transition-colors duration-300 bg-[#F5F5F5]">
+            <div id="features" className="py-28 transition-colors duration-300" style={{ backgroundColor: '#1a0a1e' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -117,10 +116,10 @@ const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
                         transition={{ duration: 0.8 }}
                         className="text-center mb-20"
                     >
-                        <h2 className="text-5xl sm:text-6xl font-serif font-bold dark:text-white dark:text-white text-wine-900 mb-6">
+                        <h2 className="text-5xl sm:text-6xl font-serif font-bold text-white mb-6">
                             Why Choose VinoPredict?
                         </h2>
-                        <p className="text-xl dark:text-gray-300 text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                        <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
                             Combining centuries of wine expertise with cutting-edge artificial intelligence
                         </p>
                     </motion.div>
@@ -158,12 +157,12 @@ const HomePage = ({ onGetStarted, isDark, toggleTheme }) => {
                                 {/* Hover glow effect */}
                                 <div className={`absolute inset-0 bg-${feature.color === 'wine' ? 'wine' : 'amber'}-200 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-3xl blur-2xl -z-10`}></div>
 
-                                <div className="bg-white dark:bg-slate-800 rounded-3xl p-10 shadow-xl border-2 dark:border-slate-700 border-gray-100 hover:border-wine-200 dark:hover:border-amber-400 hover:shadow-2xl transition-all h-full">
+                                <div className="rounded-3xl p-10 shadow-xl border-2 border-wine-700 hover:border-wine-400 hover:shadow-2xl transition-all h-full" style={{ background: '#2a1a2e' }}>
                                     <div className={`inline-flex p-5 rounded-2xl mb-6 shadow-lg`} style={{ background: feature.color === 'wine' ? 'linear-gradient(135deg, #722F37 0%, #B31329 100%)' : 'linear-gradient(135deg, #f1a64b 0%, #e28a2f 100%)' }}>
                                         <feature.icon className="h-10 w-10 text-white" strokeWidth={1.5} />
                                     </div>
-                                    <h3 className="text-2xl font-serif font-bold dark:text-white text-wine-900 mb-4">{feature.title}</h3>
-                                    <p className="dark:text-gray-300 text-gray-700 leading-relaxed text-base">{feature.description}</p>
+                                    <h3 className="text-2xl font-serif font-bold text-white mb-4">{feature.title}</h3>
+                                    <p className="text-gray-300 leading-relaxed text-base">{feature.description}</p>
                                 </div>
                             </motion.div>
                         ))}

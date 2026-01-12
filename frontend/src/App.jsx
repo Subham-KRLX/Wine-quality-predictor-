@@ -7,7 +7,7 @@ import PredictionResult from './components/PredictionResult';
 import FeatureImportanceChart from './components/FeatureImportanceChart';
 import useTheme from './hooks/useTheme';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react';
-import { Sparkles, Info, Wine, Home, AlertCircle } from 'lucide-react';
+import { Sparkles, Info, Wine, Home } from 'lucide-react';
 
 function PredictPage() {
     const [prediction, setPrediction] = useState(null);
@@ -44,22 +44,21 @@ function PredictPage() {
             const result = await response.json();
             setPrediction(result);
         } catch (err) {
-            console.error("Prediction failed:", err);
-            setError(err.message || "Failed to connect to the server. Please check your connection.");
+            setError(err.message);
         } finally {
             setIsLoading(false);
         }
     };
 
     return (
-        <div className="min-h-screen dark:bg-slate-950 [background:linear-gradient(135deg,#F5F5F5_0%,#FAFAFA_100%)]">
+        <div className="min-h-screen" style={{ background: '#1a0a1e' }}>
             {/* Header with wine gradient */}
-            <div className="shadow-lg border-b-2 dark:border-slate-700 border-amber-400/30 sticky top-0 z-50 backdrop-blur-sm dark:bg-slate-900" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
+            <div className="shadow-lg border-b-2 border-amber-400/30 sticky top-0 z-50 backdrop-blur-sm" style={{ background: 'linear-gradient(135deg, #722F37 0%, #f1a64b 100%)' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
                         <button
                             onClick={() => navigate('/')}
-                            className="flex items-center gap-2 dark:text-gray-300 dark:hover:text-amber-400 text-white hover:text-amber-200 font-medium transition-colors group"
+                            className="flex items-center gap-2 text-white hover:text-amber-200 font-medium transition-colors group"
                         >
                             <Home className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
                             <span className="hidden sm:inline">Back to Home</span>
@@ -74,12 +73,12 @@ function PredictPage() {
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <TabGroup>
-                    <TabList className="flex gap-3 p-2 dark:bg-slate-800 dark:border-slate-700 bg-white rounded-2xl shadow-xl border-2 border-wine-100 mb-10 max-w-md mx-auto">
-                        <Tab className="flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none dark:text-gray-300 text-wine-700 dark:hover:bg-slate-700 hover:bg-cream-100 data-[selected]:text-white data-[selected]:shadow-lg data-[selected]:bg-[linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
+                    <TabList className="flex gap-3 p-2 bg-[#2a1a2e] rounded-2xl shadow-xl border-2 border-wine-700 mb-10 max-w-md mx-auto">
+                        <Tab className="flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none text-gray-300 hover:bg-wine-800 data-[selected]:text-white data-[selected]:shadow-lg data-[selected]:bg-[linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
                             <Sparkles className="h-4 w-4" />
                             <span>Predict</span>
                         </Tab>
-                        <Tab className="flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none dark:text-gray-300 text-wine-700 dark:hover:bg-slate-700 hover:bg-cream-100 data-[selected]:text-white data-[selected]:shadow-lg data-[selected]:bg-[linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
+                        <Tab className="flex-1 py-3.5 px-5 rounded-xl font-semibold transition-all flex items-center justify-center gap-2 outline-none text-gray-300 hover:bg-wine-800 data-[selected]:text-white data-[selected]:shadow-lg data-[selected]:bg-[linear-gradient(135deg,#722F37_0%,#f1a64b_100%)]">
                             <Info className="h-4 w-4" />
                             <span>About</span>
                         </Tab>
@@ -89,11 +88,11 @@ function PredictPage() {
                         <TabPanel>
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                                 <div className="lg:col-span-2">
-                                    <div className="dark:bg-slate-800 dark:border-slate-700 bg-white/70 backdrop-blur-sm rounded-3xl p-10 mb-8 border-2 border-wine-100 shadow-2xl">
-                                        <h2 className="text-5xl dark:text-white font-serif font-bold text-wine-900 mb-4">
+                                    <div className="rounded-3xl p-10 mb-8 border-2 shadow-2xl" style={{ background: '#722F37', borderColor: '#f1a64b' }}>
+                                        <h2 className="text-5xl font-serif font-bold mb-4" style={{ color: '#FFFFFF' }}>
                                             Wine Quality Analysis
                                         </h2>
-                                        <p className="dark:text-gray-300 text-gray-700 text-lg leading-relaxed">
+                                        <p className="text-lg leading-relaxed" style={{ color: '#FFE4B5' }}>
                                             Enter your wine's chemical composition to receive AI-powered quality predictions
                                         </p>
                                     </div>
@@ -102,17 +101,9 @@ function PredictPage() {
 
                                 <div className="lg:col-span-1 space-y-6">
                                     {error && (
-                                        <div className="bg-red-500 text-white p-6 rounded-2xl shadow-xl border-4 border-red-700 mb-6 animate-pulse">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <AlertCircle className="h-6 w-6" />
-                                                <p className="font-bold text-lg">Prediction Failed</p>
-                                            </div>
-                                            <p className="text-white/90">{error}</p>
-                                            {error.includes("Failed to fetch") && (
-                                                <p className="text-sm mt-3 bg-red-800/50 p-2 rounded">
-                                                    <strong>Note:</strong> If you are on a deployed site, ensure the backend is running and reachable (check VITE_API_URL).
-                                                </p>
-                                            )}
+                                        <div className="bg-red-900 text-red-200 p-5 rounded-2xl border-2 border-red-600 shadow-sm">
+                                            <p className="font-semibold text-base">Error</p>
+                                            <p className="text-sm mt-1">{error}</p>
                                         </div>
                                     )}
 
@@ -120,14 +111,14 @@ function PredictPage() {
 
                                     {prediction && <FeatureImportanceChart wineType={wineType} />}
 
-                                    <div className={`p-6 rounded-2xl dark:border-slate-700 dark:bg-slate-800 border-2 ${wineType === 0 ? 'border-wine-200 bg-white shadow-lg' : 'border-amber-200 bg-white shadow-lg'}`}>
+                                    <div className={`p-6 rounded-2xl border-2 ${wineType === 0 ? 'border-wine-400 bg-wine-900' : 'border-amber-400 bg-amber-900'} shadow-lg`}>
                                         <div className="flex items-start gap-3">
-                                            <Wine className={`h-6 w-6 ${wineType === 0 ? 'text-wine-600' : 'text-amber-600'} flex-shrink-0 mt-0.5`} />
+                                            <Wine className={`h-6 w-6 ${wineType === 0 ? 'text-wine-300' : 'text-amber-300'} flex-shrink-0 mt-0.5`} />
                                             <div>
-                                                <h4 className={`font-serif font-bold dark:text-white mb-2 ${wineType === 0 ? 'text-wine-900' : 'text-amber-900'}`}>
+                                                <h4 className={`font-serif font-bold text-white mb-2`}>
                                                     Pro Tip
                                                 </h4>
-                                                <p className="dark:text-gray-300 text-sm text-gray-700 leading-relaxed">
+                                                <p className="text-sm text-gray-200 leading-relaxed">
                                                     Higher alcohol content and balanced acidity typically indicate premium wine quality.
                                                 </p>
                                             </div>
@@ -181,19 +172,19 @@ function PredictPage() {
     );
 }
 
-const HomePageWrapper = () => {
+const HomePageWrapper = ({ isDark, toggleTheme }) => {
     const navigate = useNavigate();
-    return <HomePage onGetStarted={() => navigate('/predict')} />;
+    return <HomePage onGetStarted={() => navigate('/predict')} isDark={isDark} toggleTheme={toggleTheme} />;
 };
 
 function App() {
-
+    const { isDark, toggleTheme } = useTheme();
 
     return (
         <Router>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<HomePageWrapper />} />
+                    <Route path="/" element={<HomePageWrapper isDark={isDark} toggleTheme={toggleTheme} />} />
                     <Route path="/predict" element={<PredictPage />} />
                 </Routes>
             </Layout>
