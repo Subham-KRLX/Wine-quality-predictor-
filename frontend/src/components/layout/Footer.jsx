@@ -40,7 +40,7 @@ const Footer = () => {
             <li><a href="/" className="hover:text-wine-400">Home</a></li>
             <li><a href="/predict" className="hover:text-wine-400">Predict Quality</a></li>
             <li><a href="#how-it-works" className="hover:text-wine-400">Our Model</a></li>
-            <li><a href="/analysis" className="hover:text-wine-400">Chemical Glossary</a></li>
+            <li><a href="/glossary" className="hover:text-wine-400">Chemical Glossary</a></li>
           </ul>
         </div>
 
