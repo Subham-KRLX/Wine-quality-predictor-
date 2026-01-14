@@ -36,3 +36,4 @@ class WineFeatures(BaseModel):
 class PredictionResponse(BaseModel):
     quality_score: float
     quality_label: str
+    feature_importance: dict[str, float] = {}

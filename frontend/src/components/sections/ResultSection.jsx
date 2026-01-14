@@ -8,6 +8,7 @@ const ResultSection = ({ result }) => {
   const { quality_score, quality_label } = result;
 
   const getColor = (label) => {
+    if (!label) return 'text-white';
     switch (label.toLowerCase()) {
       case 'good': return 'text-green-400';
       case 'medium': return 'text-amber-400';

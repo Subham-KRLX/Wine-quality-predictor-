@@ -1,46 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { BarChart3, Info } from 'lucide-react';
 
-const FeatureImportanceSection = ({ wineType }) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+const FeatureImportanceSection = ({ importanceData }) => {
+  if (!importanceData) return null;
 
-  useEffect(() => {
-    const fetchImportance = async () => {
-      try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        const response = await fetch(`${apiUrl}/feature-importance`);
-        if (!response.ok) throw new Error('Failed to fetch');
-        const importance = await response.json();
-
-        // importance is likely an object { "feature_name": score }
-        const formattedData = Object.entries(importance)
-          .map(([name, value]) => ({
-            name: name.replace(/_/g, ' '),
-            value: parseFloat(value)
-          }))
-          .sort((a, b) => b.value - a.value);
-
-        setData(formattedData);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchImportance();
-  }, []);
-
-  if (loading) return null;
+  const formattedData = Object.entries(importanceData)
+    .map(([name, value]) => ({
+      name: name.replace(/_/g, ' '),
+      value: parseFloat(value)
+    }))
+    .sort((a, b) => b.value - a.value);
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      animate={{ opacity: 1, y: 0 }}
       className="mt-12 p-8 rounded-3xl glass-card border-white/5"
     >
       <div className="flex items-center justify-between mb-8">
@@ -56,7 +32,7 @@ const FeatureImportanceSection = ({ wineType }) => {
       <div className="h-[400px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
-            data={data}
+            data={formattedData}
             layout="vertical"
             margin={{ top: 5, right: 30, left: 40, bottom: 5 }}
           >
@@ -81,7 +57,7 @@ const FeatureImportanceSection = ({ wineType }) => {
               formatter={(value) => [`${(value * 100).toFixed(1)}%`, 'Weight']}
             />
             <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-              {data.map((entry, index) => (
+              {formattedData.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={index === 0 ? '#be123c' : '#454545'}

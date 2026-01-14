@@ -63,12 +63,12 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
         {/* Type Selector */}
         <div className="glass-card p-4 rounded-2xl flex items-center justify-center gap-4 border-white/5">
           <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all ${wineType == 0 ? 'bg-wine-900 text-white shadow-lg shadow-wine-900/40' : 'hover:bg-white/5'}`}>
-            <input type="radio" value={0} {...register('type')} className="hidden" />
+            <input type="radio" value={0} {...register('type', { valueAsNumber: true })} className="hidden" />
             <WineIcon className="w-5 h-5" />
             <span className="font-bold">Red Wine</span>
           </label>
           <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all ${wineType == 1 ? 'bg-cream-600 text-white shadow-lg shadow-cream-900/40' : 'hover:bg-white/5'}`}>
-            <input type="radio" value={1} {...register('type')} className="hidden" />
+            <input type="radio" value={1} {...register('type', { valueAsNumber: true })} className="hidden" />
             <WineIcon className="w-5 h-5" />
             <span className="font-bold">White Wine</span>
           </label>
@@ -92,12 +92,17 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
                       <Tooltip text={field.tooltip} />
                     </div>
                     <input
+                      type="number"
                       step="any"
-                      {...register(field.name, { required: true })}
+                      {...register(field.name, {
+                        required: true,
+                        valueAsNumber: true,
+                        validate: v => Number.isFinite(v) || "Please enter a valid number"
+                      })}
                       placeholder={field.placeholder}
                       className="w-full bg-charcoal-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-wine-500/50 focus:border-wine-500 transition-all outline-none"
                     />
-                    {errors[field.name] && <p className="text-xs text-red-500 mt-1">Required</p>}
+                    {errors[field.name] && <p className="text-xs text-red-500 mt-1">{errors[field.name].message || "Required"}</p>}
                   </div>
                 ))}
               </div>

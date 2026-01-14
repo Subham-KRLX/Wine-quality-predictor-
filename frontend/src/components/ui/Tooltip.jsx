@@ -7,16 +7,22 @@ const Tooltip = ({ text }) => {
 
   return (
     <div className="relative inline-block ml-1">
-      <div
+      <button
+        type="button"
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
-        className="text-charcoal-500 hover:text-wine-400 cursor-help transition-colors"
+        onFocus={() => setShow(true)}
+        onBlur={() => setShow(false)}
+        aria-describedby="tooltip-content"
+        className="text-charcoal-500 hover:text-wine-400 cursor-help transition-colors outline-none focus:text-wine-400"
       >
         <HelpCircle className="w-4 h-4" />
-      </div>
+      </button>
       <AnimatePresence>
         {show && (
           <motion.div
+            id="tooltip-content"
+            role="tooltip"
             initial={{ opacity: 0, y: 5, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 5, scale: 0.95 }}

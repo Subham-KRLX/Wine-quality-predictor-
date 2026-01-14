@@ -1,5 +1,4 @@
 import joblib
-import pandas as pd
 import os
 from .schemas import WineFeatures
 
@@ -22,6 +21,13 @@ class WineModel:
             self.scaler = joblib.load(SCALER_PATH)
             if os.path.exists(FEATURE_NAMES_PATH):
                 self.feature_names = joblib.load(FEATURE_NAMES_PATH)
+            
+            # Pre-calculate and cache feature importance
+            self.importance_cache = None
+            if self.model and hasattr(self.model, 'feature_importances_') and self.feature_names:
+                importances = self.model.feature_importances_
+                self.importance_cache = {str(name): float(imp) for name, imp in zip(self.feature_names, importances)}
+                
             print("Model and scaler loaded successfully.")
         else:
             print("Model artifacts not found. Please train the model first.")
@@ -30,24 +36,24 @@ class WineModel:
         if not self.model or not self.scaler:
             raise Exception("Model not loaded")
         
-        # Convert input to DataFrame
+        # Convert input to dictionary with proper aliases
         data_dict = input_data.model_dump(by_alias=True)
-        df = pd.DataFrame([data_dict])
         
-        # Ensure column order matches training
+        # Maintain consistent feature order without Pandas overhead
         if self.feature_names:
-            df = df[self.feature_names]
+            ordered_data = [data_dict.get(name, 0) for name in self.feature_names]
+        else:
+            # Fallback if feature names are missing
+            ordered_data = list(data_dict.values())
             
-        # Scale
-        scaled_data = self.scaler.transform(df)
-        
-        # Predict
+        # Reshape for scikit-learn (1 sample, N features)
+        input_array = [ordered_data]
+            
+        # Scale and Predict
+        scaled_data = self.scaler.transform(input_array)
         prediction = self.model.predict(scaled_data)
+        
         return float(prediction[0])
 
     def get_feature_importance(self):
-        if not self.model or not self.feature_names:
-            return {}
-        
-        importances = self.model.feature_importances_
-        return dict(zip(self.feature_names, importances))
+        return self.importance_cache or {}
