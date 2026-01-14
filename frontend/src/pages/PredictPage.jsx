@@ -52,11 +52,14 @@ const PredictPage = () => {
 
       // Smooth scroll to results
       setTimeout(() => {
-        window.scrollTo({
-          top: document.getElementById('prediction-result')?.offsetTop - 100,
-          behavior: 'smooth'
-        });
-      }, 100);
+        const element = document.getElementById('prediction-result');
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop - 100,
+            behavior: 'smooth'
+          });
+        }
+      }, 300);
 
     } catch (err) {
       setError(err.message);
@@ -102,15 +105,15 @@ const PredictPage = () => {
           )}
         </AnimatePresence>
 
-        <div id="prediction-result">
-          <ResultSection result={result} />
+        <div id="prediction-result" className="mt-12 space-y-12 min-h-[200px]">
           {result && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <FeatureImportanceSection importanceData={result.feature_importance} />
-            </motion.div>
+            <>
+              <ResultSection result={result} />
+              <FeatureImportanceSection
+                key={result.quality_score}
+                importanceData={result.feature_importance}
+              />
+            </>
           )}
         </div>
       </div>
