@@ -109,7 +109,7 @@ const PredictPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <FeatureImportanceSection wineType={lastType} />
+              <FeatureImportanceSection importanceData={result.feature_importance} />
             </motion.div>
           )}
         </div>

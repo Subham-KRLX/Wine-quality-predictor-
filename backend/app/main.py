@@ -34,7 +34,11 @@ def predict_quality(features: WineFeatures):
         else:
             label = "Poor"
             
-        return PredictionResponse(quality_score=score, quality_label=label)
+        return PredictionResponse(
+            quality_score=score, 
+            quality_label=label,
+            feature_importance=model.get_feature_importance()
+        )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
