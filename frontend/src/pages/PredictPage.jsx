@@ -21,18 +21,18 @@ const PredictPage = () => {
 
       // Clean up data for the API
       const payload = {
-        "fixed acidity": parseFloat(data.fixed_acidity),
-        "volatile acidity": parseFloat(data.volatile_acidity),
-        "citric acid": parseFloat(data.citric_acid),
-        "residual sugar": parseFloat(data.residual_sugar),
-        "chlorides": parseFloat(data.chlorides),
-        "free sulfur dioxide": parseFloat(data.free_sulfur_dioxide),
-        "total sulfur dioxide": parseFloat(data.total_sulfur_dioxide),
-        "density": parseFloat(data.density),
-        "pH": parseFloat(data.pH),
-        "sulphates": parseFloat(data.sulphates),
-        "alcohol": parseFloat(data.alcohol),
-        "type": parseInt(data.type)
+        "fixed acidity": data.fixed_acidity,
+        "volatile acidity": data.volatile_acidity,
+        "citric acid": data.citric_acid,
+        "residual sugar": data.residual_sugar,
+        "chlorides": data.chlorides,
+        "free sulfur dioxide": data.free_sulfur_dioxide,
+        "total sulfur dioxide": data.total_sulfur_dioxide,
+        "density": data.density,
+        "pH": data.pH,
+        "sulphates": data.sulphates,
+        "alcohol": data.alcohol,
+        "type": data.type
       };
 
       const response = await fetch(`${apiUrl}/predict`, {
