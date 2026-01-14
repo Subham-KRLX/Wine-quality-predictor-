@@ -29,7 +29,8 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'Predict', path: '/predict' },
-    { name: 'Analysis', path: '/#how-it-works' },
+    { name: 'Glossary', path: '/glossary' },
+    { name: 'Science', path: '/#how-it-works' },
   ];
 
   return (
