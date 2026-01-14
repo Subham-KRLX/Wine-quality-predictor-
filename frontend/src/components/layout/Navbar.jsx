@@ -58,7 +58,7 @@ const Navbar = () => {
             </Link>
           ))}
           <a
-            href="https://github.com/NssGourav/Wine-quality-predictor-"
+            href="https://github.com/Subham-KRLX/Wine-quality-predictor-"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors border border-white/10"
@@ -98,7 +98,7 @@ const Navbar = () => {
                 </Link>
               ))}
               <a
-                href="https://github.com/NssGourav/Wine-quality-predictor-"
+                href="https://github.com/Subham-KRLX/Wine-quality-predictor-"
                 className="flex items-center gap-2 text-wine-400 font-medium"
               >
                 <Github className="w-5 h-5" />

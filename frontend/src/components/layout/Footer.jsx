@@ -14,7 +14,15 @@ const Footer = () => {
             Revolutionizing the way we understand wine quality through the power of artificial intelligence and chemical analysis.
           </p>
           <div className="flex gap-4">
-            {[Github, Linkedin, Twitter].map((Icon, i) => (
+            <a
+              href="https://github.com/Subham-KRLX/Wine-quality-predictor-"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-wine-900/40 hover:text-wine-400 transition-all border border-white/5"
+            >
+              <Github className="w-5 h-5" />
+            </a>
+            {[Linkedin, Twitter].map((Icon, i) => (
               <a
                 key={i}
                 href="#"
@@ -51,7 +59,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-charcoal-500">
         <p>© 2024 VinoPredict. Developed with precision and passion.</p>
         <p className="flex items-center gap-1">
-          Made with <Heart className="w-4 h-4 text-wine-500 fill-wine-500" /> by <span className="text-charcoal-300 font-medium">NssGourav</span>
+          Made with <Heart className="w-4 h-4 text-wine-500 fill-wine-500" /> by <a href="https://github.com/Subham-KRLX" target="_blank" rel="noopener noreferrer" className="text-charcoal-300 font-medium hover:text-wine-400">Subham-KRLX</a>
         </p>
       </div>
     </footer>
