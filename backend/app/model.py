@@ -27,6 +27,7 @@ class WineModel:
             if self.model and hasattr(self.model, 'feature_importances_') and self.feature_names:
                 importances = self.model.feature_importances_
                 self.importance_cache = {str(name): float(imp) for name, imp in zip(self.feature_names, importances)}
+                print(f"Importance cache created with {len(self.importance_cache)} features.")
                 
             print("Model and scaler loaded successfully.")
         else:

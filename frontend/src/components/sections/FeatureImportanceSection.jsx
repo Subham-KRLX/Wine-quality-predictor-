@@ -4,14 +4,19 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 import { BarChart3, Info } from 'lucide-react';
 
 const FeatureImportanceSection = ({ importanceData }) => {
-  if (!importanceData) return null;
+  // If no data or empty object, don't render
+  if (!importanceData || Object.keys(importanceData).length === 0) {
+    return null;
+  }
 
   const formattedData = Object.entries(importanceData)
     .map(([name, value]) => ({
       name: name.replace(/_/g, ' '),
-      value: parseFloat(value)
+      value: typeof value === 'number' ? value : parseFloat(value) || 0
     }))
     .sort((a, b) => b.value - a.value);
+
+  if (formattedData.length === 0) return null;
 
   return (
     <motion.div
