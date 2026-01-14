@@ -3,9 +3,11 @@ import pandas as pd
 import os
 from .schemas import WineFeatures
 
-MODEL_PATH = "backend/models/wine_quality_model.pkl"
-SCALER_PATH = "backend/models/scaler.pkl"
-FEATURE_NAMES_PATH = "backend/models/feature_names.pkl"
+# Get the absolute path to the directory containing this file
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "wine_quality_model.pkl")
+SCALER_PATH = os.path.join(BASE_DIR, "models", "scaler.pkl")
+FEATURE_NAMES_PATH = os.path.join(BASE_DIR, "models", "feature_names.pkl")
 
 class WineModel:
     def __init__(self):

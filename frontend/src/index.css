@@ -2,81 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
 @layer base {
-    body {
-        @apply antialiased;
-    }
+  html {
+    scroll-behavior: smooth;
+    background-color: #262626;
+    /* Fallback charcoal */
+  }
 
-    /* Dark mode base styles */
-    :root.dark {
-        color-scheme: dark;
-    }
+  body {
+    @apply antialiased bg-charcoal-950 text-charcoal-50;
+    font-family: 'Inter', sans-serif;
+  }
 
-    :root.dark body {
-        @apply bg-slate-950 text-white;
-    }
+  ::selection {
+    @apply bg-wine-500/30;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Outfit', sans-serif;
+  }
 }
 
 @layer utilities {
-    .animate-gradient {
-        background-size: 200% 200%;
-        animation: gradient 8s ease infinite;
-    }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  }
 
-    @keyframes gradient {
+  .wine-gradient {
+    background: linear-gradient(135deg, #4c0519 0%, #881337 50%, #be123c 100%);
+  }
 
-        0%,
-        100% {
-            background-position: 0% 50%;
-        }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-wine-400 to-cream-400;
+  }
 
-        50% {
-            background-position: 100% 50%;
-        }
-    }
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-    .glass {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
+  ::-webkit-scrollbar-track {
+    background: #262626;
+  }
 
-    .glass-dark {
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    /* Dark mode specific utilities */
-    :root.dark .glass {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-wine-900 rounded-full border-2 border-charcoal-950 hover:bg-wine-800 transition-colors;
+  }
 }
-    /* Dark mode text utilities for better visibility */
-    :root.dark body {
-        @apply text-gray-100;
-    }
 
-    :root.dark p {
-        @apply text-gray-300;
-    }
-
-    :root.dark h1,
-    :root.dark h2,
-    :root.dark h3,
-    :root.dark h4,
-    :root.dark h5,
-    :root.dark h6 {
-        @apply text-white;
-    }
-
-    :root.dark a {
-        @apply text-amber-400 hover:text-amber-300;
-    }
-
-    :root.dark button:not(.dark\:bg-slate-800) {
-        @apply dark:text-gray-100;
-    }
+.noise-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  opacity: 0.03;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3col%3e%3cg  filter='url(%23noiseFilter)'%3e%3crect width='100%25' height='100%25' fill='transparent'/%3e%3c/g%3e%3cfilter id='noiseFilter'%3e%3cfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3e%3c/filter%3e%3c/svg%3e");
+}
