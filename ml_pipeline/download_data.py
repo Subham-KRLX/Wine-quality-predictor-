@@ -1,6 +1,5 @@
 import os
 import requests
-
 DATA_DIR = "ml_pipeline/data"
 URLS = {
     "red": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
