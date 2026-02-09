@@ -5,7 +5,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
 A sophisticated full-stack machine learning application designed to predict wine quality using advanced physicochemical analysis. VinoPredict leverages state-of-the-art machine learning to provide instant, professional-grade quality assessments.
-
 ---
 
 ## 📸 Application Preview
