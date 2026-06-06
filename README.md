@@ -8,7 +8,6 @@ A sophisticated full-stack machine learning application designed to predict wine
 ---
 
 ## 📸 Application Preview
-
 <p align="center">
   <img src="docs/screenshots/landing_page.png" alt="Landing Page" width="400">
   <img src="docs/screenshots/prediction.png" alt="Prediction Interface" width="400">
