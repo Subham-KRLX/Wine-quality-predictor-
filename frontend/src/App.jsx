@@ -14,7 +14,6 @@ function App() {
         setIsSplashVisible(false);
     };
 
-
     return (
         <Router>
             <AnimatePresence mode="wait">
