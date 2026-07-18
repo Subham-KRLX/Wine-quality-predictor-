@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+
 class WineFeatures(BaseModel):
     fixed_acidity: float = Field(..., alias="fixed acidity")
     volatile_acidity: float = Field(..., alias="volatile acidity")
@@ -29,9 +30,10 @@ class WineFeatures(BaseModel):
                 "pH": 3.51,
                 "sulphates": 0.56,
                 "alcohol": 9.4,
-                "type": 0
+                "type": 0,
             }
         }
+
 
 class PredictionResponse(BaseModel):
     quality_score: float
