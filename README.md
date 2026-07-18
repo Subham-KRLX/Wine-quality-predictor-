@@ -113,6 +113,18 @@ docker-compose up --build
 
 ---
 
+## 🔌 API Endpoint
+
+The backend exposes a prediction endpoint at:
+
+```text
+POST /predict
+```
+
+Use the interactive FastAPI docs at `http://localhost:8000/docs` to test sample wine inputs during local development.
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
