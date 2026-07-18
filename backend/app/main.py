@@ -17,15 +17,17 @@ app.add_middleware(
 # Initialize model
 model = WineModel()
 
+
 @app.get("/")
 def read_root():
     return {"message": "Welcome to Wine Quality Predictor API"}
+
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict_quality(features: WineFeatures):
     try:
         score = model.predict(features)
-        
+
         # Determine label
         if score >= 7:
             label = "Good"
@@ -33,14 +35,15 @@ def predict_quality(features: WineFeatures):
             label = "Medium"
         else:
             label = "Poor"
-            
+
         return PredictionResponse(
-            quality_score=score, 
+            quality_score=score,
             quality_label=label,
             feature_importance=model.get_feature_importance()
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @app.get("/feature-importance")
 def get_feature_importance():
