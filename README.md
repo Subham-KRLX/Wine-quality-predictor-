@@ -72,6 +72,8 @@ Wine-quality-predictor-
 
 ### 1. Backend Setup
 
+Run these commands from the project root:
+
 ```bash
 # Navigate to root directory
 python -m venv venv
@@ -80,7 +82,7 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Train the model (Required for first run)
+# Train the model (required for the first run)
 python ml_pipeline/train_model.py
 
 # Start the server
@@ -89,6 +91,8 @@ uvicorn backend.app.main:app --reload
 The API will be available at `http://localhost:8000`.
 
 ### 2. Frontend Setup
+
+Open a second terminal for the frontend:
 
 ```bash
 cd frontend
