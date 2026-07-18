@@ -4,7 +4,8 @@
 [![API Docs](https://img.shields.io/badge/API-FastAPI-blue?style=for-the-badge)](https://wine-quality-backend.onrender.com/docs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-A sophisticated full-stack machine learning application designed to predict wine quality using advanced physicochemical analysis. VinoPredict leverages state-of-the-art machine learning to provide instant, professional-grade quality assessments.
+A full-stack machine learning application designed to predict wine quality using physicochemical analysis. VinoPredict uses a trained Random Forest model to provide instant quality assessments through a React interface and FastAPI backend.
+
 ---
 
 ## 📸 Application Preview
@@ -116,4 +117,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - UCI Machine Learning Repository for the [Wine Quality Dataset](https://archive.ics.uci.edu/ml/datasets/wine+quality).
 - All contributors and open-source packages that made this project possible.
-
