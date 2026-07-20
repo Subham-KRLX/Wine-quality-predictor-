@@ -70,6 +70,13 @@ Wine-quality-predictor-
 
 ## 🚀 Local Development Setup
 
+### Prerequisites
+
+- Python 3.10+
+- Node.js 18+
+- npm
+- Docker, optional for containerized local runs
+
 ### 1. Backend Setup
 
 Run these commands from the project root:
