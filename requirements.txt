@@ -1,10 +1,15 @@
+# API
 fastapi
 uvicorn
+
+# Data and machine learning
 pandas
 numpy
 scikit-learn
 xgboost
 joblib
+
+# Utilities
 requests
 python-multipart
 pydantic
