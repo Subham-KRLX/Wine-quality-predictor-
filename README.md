@@ -50,6 +50,7 @@ The screenshots below show the main landing, prediction, glossary, and science e
 - **Dataset**: UCI Wine Quality (Red & White variants)
 - **Preprocessing**: Pandas, NumPy
 - **Model Storage**: Joblib
+- **Artifacts**: Saved under `backend/models/`
 
 ---
 
