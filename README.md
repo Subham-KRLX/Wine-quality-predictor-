@@ -121,6 +121,8 @@ The application will be available at `http://localhost:5173`.
 docker-compose up --build
 ```
 
+The Docker frontend runs on `http://localhost:3000`.
+
 ---
 
 ## 🔌 API Endpoint
