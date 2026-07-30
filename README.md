@@ -135,6 +135,8 @@ POST /predict
 
 Use the interactive FastAPI docs at `http://localhost:8000/docs` to test sample wine inputs during local development.
 
+OpenAPI metadata is generated automatically by FastAPI.
+
 ### Prediction Inputs
 
 The model expects physicochemical measurements for a wine sample:
