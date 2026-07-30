@@ -9,6 +9,8 @@ A full-stack machine learning application designed to predict wine quality using
 ---
 
 ## 📸 Application Preview
+
+The screenshots below show the main landing, prediction, glossary, and science explanation views.
 <p align="center">
   <img src="docs/screenshots/landing_page.png" alt="Landing Page" width="400">
   <img src="docs/screenshots/prediction.png" alt="Prediction Interface" width="400">
