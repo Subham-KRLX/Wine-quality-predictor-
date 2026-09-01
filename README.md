@@ -6,7 +6,6 @@
 A full-stack machine learning application designed to predict wine quality using physicochemical analysis. VinoPredict uses a trained Random Forest model to provide instant quality assessments through a React interface and FastAPI backend.
 
 ---
-
 ## 📸 Application Preview
 
 The screenshots below show the main landing, prediction, glossary, and science explanation views.
