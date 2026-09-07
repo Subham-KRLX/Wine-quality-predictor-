@@ -145,6 +145,14 @@ Use the interactive FastAPI docs at `http://localhost:8000/docs` to test sample 
 
 OpenAPI metadata is generated automatically by FastAPI.
 
+### Available Endpoints
+
+| Method | Path | Purpose |
+| --- | --- | --- |
+| `GET` | `/` | Check that the API is available |
+| `POST` | `/predict` | Generate a wine quality prediction |
+| `GET` | `/feature-importance` | View model feature importance values |
+
 ### Prediction Inputs
 
 The model expects physicochemical measurements for a wine sample:
