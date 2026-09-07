@@ -129,6 +129,12 @@ docker-compose up --build
 
 The Docker frontend runs on `http://localhost:3000`.
 
+### Common Setup Checks
+
+- Confirm the backend is running before submitting a prediction.
+- Retrain the model if the serialized model file is not available locally.
+- Verify `VITE_API_URL` points to the active backend address.
+
 ---
 
 ## 🔌 API Endpoint
