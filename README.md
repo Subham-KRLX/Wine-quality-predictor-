@@ -139,6 +139,8 @@ The backend exposes a prediction endpoint at:
 POST /predict
 ```
 
+The response includes the predicted `quality_score`, its `quality_label`, and the model's `feature_importance` values.
+
 Use the interactive FastAPI docs at `http://localhost:8000/docs` to test sample wine inputs during local development.
 
 OpenAPI metadata is generated automatically by FastAPI.
