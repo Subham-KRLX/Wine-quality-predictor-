@@ -121,6 +121,8 @@ npm run dev
 ```
 The application will be available at `http://localhost:5173`.
 
+For a deployed frontend, set `VITE_API_URL` to the public URL of the FastAPI service before building the application.
+
 ### 3. Docker (Optional)
 
 ```bash
