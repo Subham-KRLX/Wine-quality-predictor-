@@ -170,6 +170,12 @@ free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, alcohol, type
 
 Use `type` as `0` for red wine and `1` for white wine.
 
+### Quality Labels
+
+- **Good**: predicted score of 7 or higher
+- **Medium**: predicted score from 5 up to 7
+- **Poor**: predicted score below 5
+
 ---
 
 ## 📄 License
