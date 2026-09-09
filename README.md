@@ -83,6 +83,13 @@ Wine-quality-predictor-
 - npm
 - Docker, optional for containerized local runs
 
+Clone the repository and enter the project directory:
+
+```bash
+git clone https://github.com/Subham-KRLX/Wine-quality-predictor-.git
+cd Wine-quality-predictor-
+```
+
 ### 1. Backend Setup
 
 Run these commands from the project root:
