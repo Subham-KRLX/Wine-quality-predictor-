@@ -38,7 +38,7 @@ The screenshots below show the main landing, prediction, glossary, and science e
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework**: [React](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Framework**: [React](https://react.dev/) + [Vite](https://vite.dev/)
 - **Styling**: [TailwindCSS](https://tailwindcss.com/)
 - **State Management**: React Hooks
 - **Deployment**: Vercel
