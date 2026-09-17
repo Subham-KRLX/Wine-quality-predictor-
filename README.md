@@ -45,7 +45,7 @@ The screenshots below show the main landing, prediction, glossary, and science e
 
 ### Backend
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/) (Python)
-- **ML Engine**: Scikit-Learn
+- **ML Engine**: scikit-learn
 - **Inference**: Random Forest Classification
 - **Deployment**: Render
 
@@ -194,5 +194,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🙏 Acknowledgments
 
 - UCI Machine Learning Repository for the [Wine Quality Dataset](https://archive.ics.uci.edu/ml/datasets/wine+quality).
-- FastAPI, React, and Scikit-Learn communities for excellent tooling and documentation.
+- FastAPI, React, and scikit-learn communities for excellent tooling and documentation.
 - All contributors and open-source packages that made this project possible.
