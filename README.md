@@ -146,7 +146,7 @@ The Docker frontend runs on `http://localhost:3000`.
 
 ---
 
-## 🔌 API Endpoint
+## 🔌 API Reference
 
 The backend exposes a prediction endpoint at:
 
