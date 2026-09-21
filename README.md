@@ -81,7 +81,7 @@ Wine-quality-predictor-
 - Python 3.10+
 - Node.js 18+
 - npm
-- Docker, optional for containerized local runs
+- Docker (optional, for containerized local runs)
 
 Clone the repository and enter the project directory:
 
