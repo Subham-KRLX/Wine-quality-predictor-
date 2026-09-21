@@ -95,7 +95,7 @@ cd Wine-quality-predictor-
 Run these commands from the project root:
 
 ```bash
-# Navigate to root directory
+# Create a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
