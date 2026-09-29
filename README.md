@@ -1,4 +1,5 @@
 # 🍷 VinoPredict: AI-Powered Wine Quality Analysis
+
 [![Live Demo](https://img.shields.io/badge/Demo-Live-green?style=for-the-badge)](https://wine-quality-predictor-pi.vercel.app)
 [![API Docs](https://img.shields.io/badge/API-FastAPI-blue?style=for-the-badge)](https://wine-quality-backend.onrender.com/docs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -11,6 +12,7 @@ A full-stack machine learning application designed to predict wine quality using
 - [Explore the API documentation](https://wine-quality-backend.onrender.com/docs)
 
 ---
+
 ## 📸 Application Preview
 
 The screenshots below show the main landing, prediction, glossary, and science explanation views.
