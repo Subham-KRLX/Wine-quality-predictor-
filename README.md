@@ -122,8 +122,8 @@ cd frontend
 # Install dependencies
 npm install
 
-# Point the frontend to the local API
-export VITE_API_URL=http://localhost:8000
+# Create the local frontend configuration
+cp .env.example .env
 
 # Start development server
 npm run dev
