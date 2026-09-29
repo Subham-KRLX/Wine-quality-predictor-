@@ -11,6 +11,12 @@ A full-stack machine learning application designed to predict wine quality using
 - [Open the live application](https://wine-quality-predictor-pi.vercel.app)
 - [Explore the API documentation](https://wine-quality-backend.onrender.com/docs)
 
+## How It Works
+
+1. The user enters 11 physicochemical measurements and selects the wine type.
+2. The React frontend sends the sample to the FastAPI prediction endpoint.
+3. The backend scales the inputs and returns a quality score, label, and feature importance values.
+
 ---
 
 ## 📸 Application Preview
