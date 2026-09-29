@@ -162,6 +162,27 @@ Use the interactive FastAPI docs at `http://localhost:8000/docs` to test sample 
 
 OpenAPI metadata is generated automatically by FastAPI.
 
+### Example Prediction Request
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "fixed acidity": 7.4,
+    "volatile acidity": 0.7,
+    "citric acid": 0.0,
+    "residual sugar": 1.9,
+    "chlorides": 0.076,
+    "free sulfur dioxide": 11.0,
+    "total sulfur dioxide": 34.0,
+    "density": 0.9978,
+    "pH": 3.51,
+    "sulphates": 0.56,
+    "alcohol": 9.4,
+    "type": 0
+  }'
+```
+
 ### Available Endpoints
 
 | Method | Path | Purpose |
