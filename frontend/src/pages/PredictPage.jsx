@@ -1,23 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PredictionForm from '../components/sections/PredictionForm';
 import ResultSection from '../components/sections/ResultSection';
 import FeatureImportanceSection from '../components/sections/FeatureImportanceSection';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertCircle } from 'lucide-react';
+import { requestPrediction } from '../lib/prediction';
 
 const PredictPage = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [lastType, setLastType] = useState(0);
+  const activeRequest = useRef(null);
+  const resultRef = useRef(null);
+
+  useEffect(() => () => activeRequest.current?.abort(), []);
+
+  useEffect(() => {
+    if (result) {
+      resultRef.current?.focus({ preventScroll: true });
+      resultRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start',
+      });
+    }
+  }, [result]);
 
   const handlePredict = async (data) => {
+    activeRequest.current?.abort();
+    const request = new AbortController();
+    activeRequest.current = request;
     setLoading(true);
     setError(null);
-    setLastType(data.type);
+    setResult(null);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = import.meta.env.VITE_API_URL?.trim()
+        || (import.meta.env.DEV ? 'http://localhost:8000' : '');
 
       // Clean up data for the API
       const payload = {
@@ -35,36 +53,18 @@ const PredictPage = () => {
         "type": data.type
       };
 
-      const response = await fetch(`${apiUrl}/predict`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+      const prediction = await requestPrediction(payload, {
+        apiUrl,
+        signal: request.signal,
       });
-
-      if (!response.ok) {
-        throw new Error('Could not get prediction from the server.');
-      }
-
-      const prediction = await response.json();
-      setResult(prediction);
-
-      // Smooth scroll to results
-      setTimeout(() => {
-        const element = document.getElementById('prediction-result');
-        if (element) {
-          window.scrollTo({
-            top: element.offsetTop - 100,
-            behavior: 'smooth'
-          });
-        }
-      }, 300);
-
+      if (!request.signal.aborted) setResult(prediction);
     } catch (err) {
-      setError(err.message);
+      if (!request.signal.aborted) setError(err.message);
     } finally {
-      setLoading(false);
+      if (activeRequest.current === request && !request.signal.aborted) {
+        setLoading(false);
+        activeRequest.current = null;
+      }
     }
   };
 
@@ -94,6 +94,7 @@ const PredictPage = () => {
         <AnimatePresence>
           {error && (
             <motion.div
+              role="alert"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
@@ -105,7 +106,7 @@ const PredictPage = () => {
           )}
         </AnimatePresence>
 
-        <div id="prediction-result" className="mt-12 space-y-12 min-h-[200px]">
+        <div id="prediction-result" ref={resultRef} tabIndex={-1} aria-label="Prediction results" className="mt-12 space-y-12 min-h-[200px] scroll-mt-28">
           {result && (
             <>
               <ResultSection result={result} />
