@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Beaker, Sparkles, Loader2, Wine as WineIcon } from 'lucide-react';
@@ -34,8 +34,8 @@ const fieldGroups = [
   }
 ];
 
-const PredictionForm = ({ onSubmit, isLoading }) => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+const PredictionForm = ({ onSubmit, isLoading, serverErrors }) => {
+  const { register, handleSubmit, watch, setError, setFocus, formState: { errors } } = useForm({
     defaultValues: {
       type: '0',
       fixed_acidity: 7.4,
@@ -53,6 +53,13 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
   });
 
   const wineType = watch('type');
+  useEffect(() => {
+    const entries = Object.entries(serverErrors || {});
+    entries.forEach(([name, message]) => setError(name, { type: 'server', message }));
+    if (entries.length) setFocus(entries[0][0]);
+  }, [serverErrors, setError, setFocus]);
+
+  const labels = Object.fromEntries(fieldGroups.flatMap(group => group.fields.map(field => [field.name, field.label])));
 
   return (
     <motion.div
@@ -61,6 +68,20 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
       className="max-w-4xl mx-auto"
     >
       <form noValidate aria-busy={isLoading} onSubmit={handleSubmit(data => onSubmit({ ...data, type: Number(data.type) }))} className="space-y-8">
+        {Object.keys(errors).length > 0 && (
+          <div role="alert" className="p-4 border border-red-400/50 rounded-lg bg-red-900/20 text-red-300">
+            <p className="font-bold">Correct these readings to calculate wine quality:</p>
+            <ul className="mt-2 space-y-2">
+              {Object.entries(errors).map(([name, error]) => (
+                <li key={name}>
+                  <button type="button" onClick={() => setFocus(name)} className="text-left underline underline-offset-4 focus-visible:ring-2 focus-visible:ring-white">
+                    {labels[name] || 'Wine type'}: {error.message || 'Choose a wine type'}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
         {/* Type Selector */}
         <fieldset disabled={isLoading} className="glass-card p-4 rounded-2xl flex items-center justify-center gap-4 border-white/5">
           <legend className="sr-only">Wine type</legend>

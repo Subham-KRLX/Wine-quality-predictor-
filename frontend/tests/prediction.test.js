@@ -43,3 +43,22 @@ test('missing configuration never sends a request', async t => {
   await assert.rejects(requestPrediction({}, { apiUrl: '' }), /not configured/);
   assert.equal(fetch.mock.callCount(), 0);
 });
+
+test('accepts valid responses from the deployed API without feature importance', async t => {
+  t.mock.method(globalThis, 'fetch', async () => Response.json({ quality_score: 5.137725000842364, quality_label: 'Medium' }));
+  const result = await requestPrediction({}, options);
+  assert.equal(result.quality_score, 5.137725000842364);
+  assert.deepEqual(result.feature_importance, {});
+});
+
+test('maps backend rejection to the exact input field and entered value', async t => {
+  t.mock.method(globalThis, 'fetch', async () => Response.json({ detail: [
+    { loc: ['body', 'pH'], msg: 'Input should be less than or equal to 14' },
+    { loc: ['body', 'fixed acidity'], msg: 'Input should be greater than or equal to 0' },
+  ] }, { status: 422 }));
+  await assert.rejects(requestPrediction({ pH: 15, 'fixed acidity': -2 }, options), error => {
+    assert.match(error.fieldErrors.pH, /entered: 15/);
+    assert.match(error.fieldErrors.fixed_acidity, /entered: -2/);
+    return true;
+  });
+});

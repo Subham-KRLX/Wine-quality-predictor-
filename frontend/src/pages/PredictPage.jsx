@@ -10,6 +10,7 @@ const PredictPage = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
   const activeRequest = useRef(null);
   const resultRef = useRef(null);
 
@@ -31,6 +32,7 @@ const PredictPage = () => {
     activeRequest.current = request;
     setLoading(true);
     setError(null);
+    setFieldErrors({});
     setResult(null);
 
     try {
@@ -59,7 +61,10 @@ const PredictPage = () => {
       });
       if (!request.signal.aborted) setResult(prediction);
     } catch (err) {
-      if (!request.signal.aborted) setError(err.message);
+      if (!request.signal.aborted) {
+        setError(err.message);
+        setFieldErrors(err.fieldErrors || {});
+      }
     } finally {
       if (activeRequest.current === request && !request.signal.aborted) {
         setLoading(false);
@@ -89,7 +94,7 @@ const PredictPage = () => {
           </motion.p>
         </div>
 
-        <PredictionForm onSubmit={handlePredict} isLoading={loading} />
+        <PredictionForm onSubmit={handlePredict} isLoading={loading} serverErrors={fieldErrors} />
 
         <AnimatePresence>
           {error && (
