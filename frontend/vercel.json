@@ -1,5 +1,10 @@
 {
+    "buildCommand": "VITE_API_URL=/api npm run build",
     "rewrites": [
+        {
+            "source": "/api/:path*",
+            "destination": "https://wine-quality-backend.onrender.com/:path*"
+        },
         {
             "source": "/(.*)",
             "destination": "/index.html"
