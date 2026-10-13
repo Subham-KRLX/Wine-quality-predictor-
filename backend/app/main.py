@@ -1,7 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from .schemas import WineFeatures, PredictionResponse
-from .model import WineModel
+from .model import WineModel, ModelUnavailableError
+import logging
+
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Wine Quality Predictor API")
 
@@ -41,13 +44,16 @@ def predict_quality(features: WineFeatures):
             quality_label=label,
             feature_importance=model.get_feature_importance()
         )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except ModelUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception:
+        logger.exception("Wine prediction failed")
+        raise HTTPException(status_code=500, detail="Prediction failed. Please try again later.")
 
 
 @app.get("/feature-importance")
 def get_feature_importance():
     try:
         return model.get_feature_importance()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except ModelUnavailableError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc

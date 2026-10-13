@@ -1,5 +1,6 @@
 import joblib
 import os
+import logging
 from .schemas import WineFeatures
 
 # Resolve model artifacts relative to the backend package.
@@ -7,6 +8,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(BASE_DIR, "models", "wine_quality_model.pkl")
 SCALER_PATH = os.path.join(BASE_DIR, "models", "scaler.pkl")
 FEATURE_NAMES_PATH = os.path.join(BASE_DIR, "models", "feature_names.pkl")
+logger = logging.getLogger(__name__)
+
+
+class ModelUnavailableError(RuntimeError):
+    pass
 
 
 class WineModel:
@@ -14,39 +20,45 @@ class WineModel:
         self.model = None
         self.scaler = None
         self.feature_names = None
+        self.importance_cache = {}
         self.load_model()
 
     def load_model(self):
-        if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
-            self.model = joblib.load(MODEL_PATH)
-            self.scaler = joblib.load(SCALER_PATH)
-            if os.path.exists(FEATURE_NAMES_PATH):
-                self.feature_names = joblib.load(FEATURE_NAMES_PATH)
+        self.model = self.scaler = self.feature_names = None
+        self.importance_cache = {}
+        try:
+            model = joblib.load(MODEL_PATH)
+            scaler = joblib.load(SCALER_PATH)
+            names = joblib.load(FEATURE_NAMES_PATH)
+            expected = {field.alias or name for name, field in WineFeatures.model_fields.items()}
+            if not isinstance(names, list) or len(names) != len(expected) or set(names) != expected:
+                raise ValueError("Feature names do not match the API schema")
+            if model.n_features_in_ != len(names) or scaler.n_features_in_ != len(names):
+                raise ValueError("Model and scaler feature counts do not match")
+            if hasattr(scaler, 'feature_names_in_') and list(scaler.feature_names_in_) != names:
+                raise ValueError("Scaler feature order does not match")
+            importances = model.feature_importances_
+            if len(importances) != len(names):
+                raise ValueError("Feature importance count does not match")
+            cache = {name: float(value) for name, value in zip(names, importances)}
+            # Publish artifacts together only after their shared schema is validated.
+            self.model, self.scaler, self.feature_names = model, scaler, names
+            self.importance_cache = cache
+        except Exception:
+            logger.exception("Unable to load compatible wine model artifacts")
 
-            # Cache feature importance once during startup.
-            self.importance_cache = None
-            if self.model and hasattr(self.model, 'feature_importances_') and self.feature_names:
-                importances = self.model.feature_importances_
-                self.importance_cache = {str(name): float(imp) for name, imp in zip(self.feature_names, importances)}
-                print(f"Importance cache created with {len(self.importance_cache)} features.")
-
-            print("Model and scaler loaded successfully.")
-        else:
-            print("Model artifacts not found. Please train the model first.")
+    def require_ready(self):
+        if self.model is None or self.scaler is None or self.feature_names is None:
+            raise ModelUnavailableError("Prediction model is unavailable. Please try again later.")
 
     def predict(self, input_data: WineFeatures):
-        if not self.model or not self.scaler:
-            raise Exception("Model not loaded")
+        self.require_ready()
 
         # Convert input to dictionary with proper aliases
         data_dict = input_data.model_dump(by_alias=True)
 
         # Maintain consistent feature order without Pandas overhead
-        if self.feature_names:
-            ordered_data = [data_dict.get(name, 0) for name in self.feature_names]
-        else:
-            # Fallback if feature names are missing
-            ordered_data = list(data_dict.values())
+        ordered_data = [data_dict[name] for name in self.feature_names]
 
         # Reshape for scikit-learn (1 sample, N features)
         input_array = [ordered_data]
@@ -58,4 +70,5 @@ class WineModel:
         return float(prediction[0])
 
     def get_feature_importance(self):
-        return self.importance_cache or {}
+        self.require_ready()
+        return self.importance_cache
