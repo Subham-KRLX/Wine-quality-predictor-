@@ -1,19 +1,29 @@
-from pydantic import BaseModel, Field
+from typing import Annotated
+from pydantic import BaseModel, Field, model_validator
+
+
+Measurement = Annotated[float, Field(ge=0, allow_inf_nan=False)]
 
 
 class WineFeatures(BaseModel):
-    fixed_acidity: float = Field(..., alias="fixed acidity")
-    volatile_acidity: float = Field(..., alias="volatile acidity")
-    citric_acid: float = Field(..., alias="citric acid")
-    residual_sugar: float = Field(..., alias="residual sugar")
-    chlorides: float = Field(..., alias="chlorides")
-    free_sulfur_dioxide: float = Field(..., alias="free sulfur dioxide")
-    total_sulfur_dioxide: float = Field(..., alias="total sulfur dioxide")
-    density: float = Field(..., alias="density")
-    pH: float = Field(..., alias="pH")
-    sulphates: float = Field(..., alias="sulphates")
-    alcohol: float = Field(..., alias="alcohol")
-    type: int = Field(..., description="0 for red, 1 for white")
+    fixed_acidity: Measurement = Field(..., alias="fixed acidity")
+    volatile_acidity: Measurement = Field(..., alias="volatile acidity")
+    citric_acid: Measurement = Field(..., alias="citric acid")
+    residual_sugar: Measurement = Field(..., alias="residual sugar")
+    chlorides: Measurement = Field(..., alias="chlorides")
+    free_sulfur_dioxide: Measurement = Field(..., alias="free sulfur dioxide")
+    total_sulfur_dioxide: Measurement = Field(..., alias="total sulfur dioxide")
+    density: float = Field(..., gt=0, allow_inf_nan=False)
+    pH: Measurement = Field(..., le=14)
+    sulphates: Measurement
+    alcohol: Measurement = Field(..., le=100)
+    type: int = Field(..., strict=True, ge=0, le=1, description="0 for red, 1 for white")
+
+    @model_validator(mode="after")
+    def validate_sulfur(self):
+        if self.free_sulfur_dioxide > self.total_sulfur_dioxide:
+            raise ValueError("Free SO2 cannot exceed total SO2")
+        return self
 
     class Config:
         populate_by_name = True

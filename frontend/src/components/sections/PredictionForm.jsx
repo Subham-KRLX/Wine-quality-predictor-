@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Beaker, Sparkles, Loader2, Wine as WineIcon } from 'lucide-react';
 import Tooltip from '../ui/Tooltip';
+import { validateMeasurement } from '../../lib/validation';
 
 const fieldGroups = [
   {
@@ -36,7 +37,7 @@ const fieldGroups = [
 const PredictionForm = ({ onSubmit, isLoading }) => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
-      type: 0,
+      type: '0',
       fixed_acidity: 7.4,
       volatile_acidity: 0.7,
       citric_acid: 0,
@@ -59,16 +60,16 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-4xl mx-auto"
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+      <form noValidate onSubmit={handleSubmit(data => onSubmit({ ...data, type: Number(data.type) }))} className="space-y-8">
         {/* Type Selector */}
         <div className="glass-card p-4 rounded-2xl flex items-center justify-center gap-4 border-white/5">
           <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all ${wineType == 0 ? 'bg-wine-900 text-white shadow-lg shadow-wine-900/40' : 'hover:bg-white/5'}`}>
-            <input type="radio" value={0} {...register('type', { valueAsNumber: true })} className="hidden" />
+            <input type="radio" value="0" {...register('type', { required: true })} className="hidden" />
             <WineIcon className="w-5 h-5" />
             <span className="font-bold">Red Wine</span>
           </label>
           <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all ${wineType == 1 ? 'bg-cream-600 text-white shadow-lg shadow-cream-900/40' : 'hover:bg-white/5'}`}>
-            <input type="radio" value={1} {...register('type', { valueAsNumber: true })} className="hidden" />
+            <input type="radio" value="1" {...register('type', { required: true })} className="hidden" />
             <WineIcon className="w-5 h-5" />
             <span className="font-bold">White Wine</span>
           </label>
@@ -95,9 +96,10 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
                       type="number"
                       step="any"
                       {...register(field.name, {
-                        required: true,
+                        required: 'Enter a value',
                         valueAsNumber: true,
-                        validate: v => Number.isFinite(v) || "Please enter a valid number"
+                        validate: (value, values) => validateMeasurement(field.name, value, values),
+                        deps: field.name === 'free_sulfur_dioxide' ? ['total_sulfur_dioxide'] : undefined
                       })}
                       placeholder={field.placeholder}
                       className="w-full bg-charcoal-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-wine-500/50 focus:border-wine-500 transition-all outline-none"
