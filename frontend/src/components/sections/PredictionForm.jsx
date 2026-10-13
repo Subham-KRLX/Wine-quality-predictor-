@@ -28,7 +28,7 @@ const fieldGroups = [
     fields: [
       { name: "chlorides", label: "Chlorides", tooltip: "Amount of salt in the wine.", placeholder: "e.g. 0.076" },
       { name: "free_sulfur_dioxide", label: "Free SO2", tooltip: "Prevents microbial growth and oxidation.", placeholder: "e.g. 11.0" },
-      { name: "total_sulfur_dioxide", label: "Total SO2", tooltip: "Portion of SO2 that is free in the wine.", placeholder: "e.g. 34.0" },
+      { name: "total_sulfur_dioxide", label: "Total SO2", tooltip: "Total of free and bound sulfur dioxide in the wine.", placeholder: "e.g. 34.0" },
       { name: "sulphates", label: "Sulphates", tooltip: "Additive which acts as an antimicrobial and antioxidant.", placeholder: "e.g. 0.56" },
     ]
   }
@@ -60,20 +60,21 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-4xl mx-auto"
     >
-      <form noValidate onSubmit={handleSubmit(data => onSubmit({ ...data, type: Number(data.type) }))} className="space-y-8">
+      <form noValidate aria-busy={isLoading} onSubmit={handleSubmit(data => onSubmit({ ...data, type: Number(data.type) }))} className="space-y-8">
         {/* Type Selector */}
-        <div className="glass-card p-4 rounded-2xl flex items-center justify-center gap-4 border-white/5">
-          <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all ${wineType == 0 ? 'bg-wine-900 text-white shadow-lg shadow-wine-900/40' : 'hover:bg-white/5'}`}>
-            <input type="radio" value="0" {...register('type', { required: true })} className="hidden" />
+        <fieldset disabled={isLoading} className="glass-card p-4 rounded-2xl flex items-center justify-center gap-4 border-white/5">
+          <legend className="sr-only">Wine type</legend>
+          <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all focus-within:ring-2 focus-within:ring-white ${wineType === '0' ? 'bg-wine-900 text-white shadow-lg shadow-wine-900/40' : 'hover:bg-white/5'}`}>
+            <input type="radio" value="0" {...register('type', { required: true })} className="sr-only" />
             <WineIcon className="w-5 h-5" />
             <span className="font-bold">Red Wine</span>
           </label>
-          <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all ${wineType == 1 ? 'bg-cream-600 text-white shadow-lg shadow-cream-900/40' : 'hover:bg-white/5'}`}>
-            <input type="radio" value="1" {...register('type', { required: true })} className="hidden" />
+          <label className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl cursor-pointer transition-all focus-within:ring-2 focus-within:ring-white ${wineType === '1' ? 'bg-cream-600 text-white shadow-lg shadow-cream-900/40' : 'hover:bg-white/5'}`}>
+            <input type="radio" value="1" {...register('type', { required: true })} className="sr-only" />
             <WineIcon className="w-5 h-5" />
             <span className="font-bold">White Wine</span>
           </label>
-        </div>
+        </fieldset>
 
         {/* Input Groups */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -87,12 +88,16 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
                 {group.fields.map((field) => (
                   <div key={field.name} className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <label className="text-sm font-medium text-charcoal-400">
+                      <label htmlFor={`wine-${field.name}`} className="text-sm font-medium text-charcoal-300">
                         {field.label}
                       </label>
-                      <Tooltip text={field.tooltip} />
+                      <Tooltip text={field.tooltip} label={`About ${field.label}`} />
                     </div>
                     <input
+                      id={`wine-${field.name}`}
+                      disabled={isLoading}
+                      aria-invalid={Boolean(errors[field.name])}
+                      aria-describedby={errors[field.name] ? `error-${field.name}` : undefined}
                       type="number"
                       step="any"
                       {...register(field.name, {
@@ -104,7 +109,7 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
                       placeholder={field.placeholder}
                       className="w-full bg-charcoal-900/50 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:ring-2 focus:ring-wine-500/50 focus:border-wine-500 transition-all outline-none"
                     />
-                    {errors[field.name] && <p className="text-xs text-red-500 mt-1">{errors[field.name].message || "Required"}</p>}
+                    {errors[field.name] && <p id={`error-${field.name}`} role="alert" className="text-xs text-red-400 mt-1">{errors[field.name].message || "Required"}</p>}
                   </div>
                 ))}
               </div>
@@ -118,7 +123,7 @@ const PredictionForm = ({ onSubmit, isLoading }) => {
           className="w-full py-4 bg-wine-700 hover:bg-wine-600 disabled:bg-charcoal-800 text-white rounded-2xl font-bold text-lg transition-all shadow-xl shadow-wine-900/20 flex items-center justify-center gap-3 group"
         >
           {isLoading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
+            <><Loader2 aria-hidden="true" className="w-6 h-6 animate-spin" /><span role="status">Analyzing quality...</span></>
           ) : (
             <>
               Analyze Quality

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HelpCircle } from 'lucide-react';
 
-const Tooltip = ({ text }) => {
+const Tooltip = ({ text, label = 'More information' }) => {
   const [show, setShow] = useState(false);
+  const tooltipId = useId();
 
   return (
     <div className="relative inline-block ml-1">
@@ -13,7 +14,9 @@ const Tooltip = ({ text }) => {
         onMouseLeave={() => setShow(false)}
         onFocus={() => setShow(true)}
         onBlur={() => setShow(false)}
-        aria-describedby="tooltip-content"
+        onKeyDown={event => { if (event.key === 'Escape') setShow(false); }}
+        aria-label={label}
+        aria-describedby={show ? tooltipId : undefined}
         className="text-charcoal-500 hover:text-wine-400 cursor-help transition-colors outline-none focus:text-wine-400"
       >
         <HelpCircle className="w-4 h-4" />
@@ -21,7 +24,7 @@ const Tooltip = ({ text }) => {
       <AnimatePresence>
         {show && (
           <motion.div
-            id="tooltip-content"
+            id={tooltipId}
             role="tooltip"
             initial={{ opacity: 0, y: 5, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
