@@ -4,6 +4,7 @@ import MainLayout from './components/layout/MainLayout';
 import LandingPage from './pages/LandingPage';
 import PredictPage from './pages/PredictPage';
 import GlossaryPage from './pages/GlossaryPage';
+import EvaluationPage from './pages/EvaluationPage';
 import SplashScreen from './components/ui/SplashScreen';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -32,6 +33,7 @@ function App() {
                                 <Route path="/" element={<LandingPage />} />
                                 <Route path="/predict" element={<PredictPage />} />
                                 <Route path="/glossary" element={<GlossaryPage />} />
+                                <Route path="/evaluation" element={<EvaluationPage />} />
                             </Routes>
                         </MainLayout>
                     </motion.div>

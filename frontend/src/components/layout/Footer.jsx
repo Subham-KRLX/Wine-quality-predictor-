@@ -43,6 +43,7 @@ const Footer = () => {
             <li><Link to="/predict" className="hover:text-wine-400">Predict Quality</Link></li>
             <li><Link to="/#how-it-works" className="hover:text-wine-400">Our Model</Link></li>
             <li><Link to="/glossary" className="hover:text-wine-400">Chemical Glossary</Link></li>
+            <li><Link to="/evaluation" className="hover:text-wine-400">Model Evaluation</Link></li>
           </ul>
         </div>
 

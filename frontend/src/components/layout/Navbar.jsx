@@ -34,6 +34,7 @@ const Navbar = () => {
     { name: 'Predict', path: '/predict' },
     { name: 'Glossary', path: '/glossary' },
     { name: 'Science', path: '/#how-it-works' },
+    { name: 'Evaluation', path: '/evaluation' },
   ];
 
   return (
