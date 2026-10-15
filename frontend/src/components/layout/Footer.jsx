@@ -1,5 +1,6 @@
 import React from 'react';
-import { Wine, Github, Linkedin, Twitter, Heart } from 'lucide-react';
+import { Wine, Github, Linkedin, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -18,29 +19,30 @@ const Footer = () => {
               href="https://github.com/Subham-KRLX/Wine-quality-predictor-"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="View source code on GitHub"
               className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-wine-900/40 hover:text-wine-400 transition-all border border-white/5"
             >
               <Github className="w-5 h-5" />
             </a>
-            {[Linkedin, Twitter].map((Icon, i) => (
               <a
-                key={i}
-                href="#"
+                href="https://www.linkedin.com/in/subham-sangwan-592a0a316/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Subham Sangwan on LinkedIn"
                 className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-wine-900/40 hover:text-wine-400 transition-all border border-white/5"
               >
-                <Icon className="w-5 h-5" />
+                <Linkedin className="w-5 h-5" />
               </a>
-            ))}
           </div>
         </div>
 
         <div>
           <h4 className="text-white font-bold mb-6 italic">Navigation</h4>
           <ul className="space-y-4 text-charcoal-400 text-sm">
-            <li><a href="/" className="hover:text-wine-400">Home</a></li>
-            <li><a href="/predict" className="hover:text-wine-400">Predict Quality</a></li>
-            <li><a href="#how-it-works" className="hover:text-wine-400">Our Model</a></li>
-            <li><a href="/glossary" className="hover:text-wine-400">Chemical Glossary</a></li>
+            <li><Link to="/" className="hover:text-wine-400">Home</Link></li>
+            <li><Link to="/predict" className="hover:text-wine-400">Predict Quality</Link></li>
+            <li><Link to="/#how-it-works" className="hover:text-wine-400">Our Model</Link></li>
+            <li><Link to="/glossary" className="hover:text-wine-400">Chemical Glossary</Link></li>
           </ul>
         </div>
 
@@ -57,7 +59,7 @@ const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-charcoal-500">
-        <p>© 2024 VinoPredict. Developed with precision and passion.</p>
+        <p>© {new Date().getFullYear()} VinoPredict.</p>
         <p className="flex items-center gap-1">
           Made with <Heart className="w-4 h-4 text-wine-500 fill-wine-500" /> by <a href="https://github.com/Subham-KRLX" target="_blank" rel="noopener noreferrer" className="text-charcoal-300 font-medium hover:text-wine-400">Subham-KRLX</a>
         </p>

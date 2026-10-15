@@ -19,9 +19,12 @@ const Navbar = () => {
       const id = location.hash.replace('#', '');
       const element = document.getElementById(id);
       if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: 'smooth' });
+        const timer = setTimeout(() => {
+          element.scrollIntoView({
+            behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+          });
         }, 100);
+        return () => clearTimeout(timer);
       }
     }
   }, [location]);
@@ -35,6 +38,7 @@ const Navbar = () => {
 
   return (
     <nav
+      aria-label="Main navigation"
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-charcoal-950/80 backdrop-blur-lg border-b border-white/10 py-4' : 'bg-transparent py-6'
         }`}
     >
@@ -71,6 +75,10 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button
+          type="button"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
           className="md:hidden text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
@@ -82,6 +90,7 @@ const Navbar = () => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
