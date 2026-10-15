@@ -38,7 +38,7 @@ const Hero = ({ onGetStarted }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-charcoal-300 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed font-sans"
         >
-          Unlock the secrets of oenology. Our advanced Random Forest model analyzes physicochemical properties to provide instant, professional-grade quality assessments.
+          Explore how chemical measurements relate to wine quality. Enter your sample readings to get a quality estimate from a Random Forest regression model.
         </motion.p>
 
         <motion.div
@@ -73,17 +73,17 @@ const Hero = ({ onGetStarted }) => {
             {
               icon: <Zap className="w-6 h-6 text-cream-400" />,
               title: "Instant Analysis",
-              desc: "Get quality predictions in milliseconds based on 11 chemical features."
+              desc: "Estimate quality from 11 chemical measurements and your selected wine type."
             },
             {
               icon: <ShieldCheck className="w-6 h-6 text-wine-400" />,
-              title: "ML Validated",
-              desc: "Engineered using the UCI Wine Quality dataset and high-accuracy algorithms."
+              title: "Dataset-Based Model",
+              desc: "Trained on red and white wine samples from the UCI Wine Quality dataset."
             },
             {
               icon: <BarChart3 className="w-6 h-6 text-cream-400" />,
               title: "Visual Insights",
-              desc: "Interactive charts visualize the impact of each feature on overall quality."
+              desc: "View overall model feature importance when explanation data is available."
             }
           ].map((feature, i) => (
             <div key={i} className="glass-card p-6 rounded-2xl text-left border-white/5 hover:border-wine-500/20 transition-colors group">

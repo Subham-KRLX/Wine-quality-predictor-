@@ -13,7 +13,7 @@ const ModelExplanation = () => {
     {
       icon: <Cpu className="w-8 h-8" />,
       title: "Algorithm",
-      desc: "Utilizes a Random Forest Classifier to handle complex non-linear relationships between chemical markers.",
+      desc: "Uses a Random Forest Regressor to estimate a numerical quality score from chemical measurements and wine type.",
       color: "text-wine-400"
     },
     {
@@ -43,7 +43,7 @@ const ModelExplanation = () => {
             transition={{ delay: 0.2 }}
             className="text-charcoal-400 max-w-2xl mx-auto"
           >
-            Our predictor isn't based on opinion—it's driven by rigorous data analysis and state-of-the-art machine learning.
+            The model learns patterns from chemical measurements and human sensory ratings in the UCI Wine Quality dataset.
           </motion.p>
         </div>
 
@@ -83,7 +83,7 @@ const ModelExplanation = () => {
               Technical Foundation
             </h3>
             <p className="text-wine-100 max-w-xl">
-              We leverage scikit-learn for model training and FastAPI for high-performance inference, ensuring that you get laboratory-quality results instantly.
+              The model is trained with scikit-learn and served through FastAPI. Predictions are estimates based on the training data, not a replacement for laboratory testing or sensory evaluation.
             </p>
           </div>
           <div className="flex gap-4">

@@ -127,7 +127,7 @@ const GlossaryPage = () => {
         >
           <h3 className="text-xl font-bold mb-4 italic">Ready to see the science in action?</h3>
           <p className="text-charcoal-400 mb-8 max-w-lg mx-auto">
-            Our model uses these exact parameters to calculate a professional-grade quality score in milliseconds.
+            The model uses these measurements and wine type to estimate quality. Use the units shown here when entering a sample.
           </p>
           <a
             href="/predict"

@@ -78,13 +78,13 @@ const FeatureImportanceSection = ({ importanceData }) => {
         <div className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
           <Info className="w-5 h-5 text-wine-400 mt-1" />
           <p className="text-xs text-charcoal-400 leading-relaxed">
-            <strong>Alcohol</strong> and <strong>Sulphates</strong> often play a critical role in determining perceived quality.
+            <strong>{formattedData[0].name}</strong> has the highest overall importance in this trained model.
           </p>
         </div>
         <div className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
           <Info className="w-5 h-5 text-cream-400 mt-1" />
           <p className="text-xs text-charcoal-400 leading-relaxed">
-            Weights represent the relative importance of each feature in the Random Forest ensemble.
+            These values describe the model overall. They do not explain how each reading affected this individual prediction or prove cause and effect.
           </p>
         </div>
       </div>

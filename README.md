@@ -37,7 +37,7 @@ The screenshots below show the main landing, prediction, glossary, and science e
 
 - **🎯 Precision ML Prediction**: Instantly analyze wine quality based on 11 physicochemical properties.
 - **📚 Chemical Glossary**: Interactive guide to understanding the impact of pH, acidity, and alcohol levels.
-- **🔬 Science-Driven**: Powered by a Random Forest Classifier trained on the renowned UCI Wine Quality dataset.
+- **🔬 Science-Driven**: Powered by a Random Forest Regressor trained on the UCI Wine Quality dataset. Scores are estimates learned from chemical measurements and human sensory ratings.
 - **📱 Responsive Design**: Seamless experience across desktop and mobile devices.
 - **⚡ Fast Inference**: High-performance backend providing results in milliseconds.
 
