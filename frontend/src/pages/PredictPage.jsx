@@ -26,7 +26,7 @@ const PredictPage = () => {
     }
   }, [result]);
 
-  const handlePredict = async (data) => {
+  const handlePredict = async (data, context) => {
     activeRequest.current?.abort();
     const request = new AbortController();
     activeRequest.current = request;
@@ -59,7 +59,7 @@ const PredictPage = () => {
         apiUrl,
         signal: request.signal,
       });
-      if (!request.signal.aborted) setResult(prediction);
+      if (!request.signal.aborted) setResult({ ...prediction, context });
     } catch (err) {
       if (!request.signal.aborted) {
         setError(err.message);
@@ -94,7 +94,8 @@ const PredictPage = () => {
           </motion.p>
         </div>
 
-        <PredictionForm onSubmit={handlePredict} isLoading={loading} serverErrors={fieldErrors} />
+        <PredictionForm onSubmit={handlePredict} isLoading={loading} serverErrors={fieldErrors}
+          onValuesChange={() => { setResult(null); setError(null); setFieldErrors({}); }} />
 
         <AnimatePresence>
           {error && (

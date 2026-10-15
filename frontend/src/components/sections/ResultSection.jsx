@@ -37,7 +37,7 @@ const ResultSection = ({ result }) => {
         <div className="text-center md:text-left">
           <h3 className="text-charcoal-400 font-bold tracking-widest uppercase text-sm mb-2">Predicted Quality</h3>
           <div className="flex items-baseline gap-4 justify-center md:justify-start">
-            <span className="text-7xl md:text-8xl font-black text-white">{quality_score.toFixed(1)}</span>
+            <span className="text-5xl sm:text-7xl md:text-8xl font-black text-white">{quality_score.toFixed(2)}</span>
             <span className="text-2xl text-charcoal-500 font-bold">/ 10</span>
           </div>
           <div className={`mt-4 inline-flex items-center gap-2 px-6 py-2 rounded-full bg-white/5 border border-white/10 ${getColor(quality_label)}`}>
@@ -73,11 +73,19 @@ const ResultSection = ({ result }) => {
           <div className="p-4 rounded-xl bg-charcoal-900/50 border border-white/5 flex gap-4">
             <Info className="w-6 h-6 text-cream-400 flex-shrink-0" />
             <p className="text-sm text-charcoal-300 leading-relaxed">
-              This prediction is based on the correlation between chemical markers and human sensory ratings. A score of <strong>{quality_score.toFixed(1)}</strong> indicates that this wine belongs to the <strong>{quality_label}</strong> category.
+              Estimated quality: <strong>{quality_score.toFixed(2)}/10</strong> ({quality_label}). Decimal places show small model changes, not guaranteed measurement precision.
             </p>
           </div>
         </div>
       </div>
+      {result.context?.rangeWarnings?.length > 0 && <p role="status" className="mt-6 text-amber-300 text-sm relative z-10">
+        This sample includes readings outside the reference training range. Treat the estimate with caution.
+      </p>}
+      {result.context?.sample && <p className="mt-6 text-charcoal-200 text-sm relative z-10">
+        Recorded dataset rating: {result.context.sample.actual_quality}/10.
+        {' '}Difference from this prediction: {Math.abs(quality_score - result.context.sample.actual_quality).toFixed(2)} points.
+        {' '}One example does not measure overall accuracy.
+      </p>}
     </motion.div>
   );
 };

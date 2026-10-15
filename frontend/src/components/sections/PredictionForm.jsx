@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { Beaker, Sparkles, Loader2, Wine as WineIcon } from 'lucide-react';
 import Tooltip from '../ui/Tooltip';
 import { validateMeasurement } from '../../lib/validation';
+import { getRangeWarnings, measurementUnits } from '../../lib/wineReference';
+import report from '../../data/evaluation.json';
 
 const fieldGroups = [
   {
@@ -34,8 +36,9 @@ const fieldGroups = [
   }
 ];
 
-const PredictionForm = ({ onSubmit, isLoading, serverErrors }) => {
-  const { register, handleSubmit, watch, setError, setFocus, formState: { errors } } = useForm({
+const PredictionForm = ({ onSubmit, isLoading, serverErrors, onValuesChange }) => {
+  const [sample, setSample] = useState(null);
+  const { register, handleSubmit, watch, reset, setError, setFocus, formState: { errors } } = useForm({
     defaultValues: {
       type: '0',
       fixed_acidity: 7.4,
@@ -52,7 +55,9 @@ const PredictionForm = ({ onSubmit, isLoading, serverErrors }) => {
     }
   });
 
-  const wineType = watch('type');
+  const values = watch();
+  const wineType = values.type;
+  const rangeWarnings = getRangeWarnings(values, report.reference_ranges);
   useEffect(() => {
     const entries = Object.entries(serverErrors || {});
     entries.forEach(([name, message]) => setError(name, { type: 'server', message }));
@@ -67,7 +72,26 @@ const PredictionForm = ({ onSubmit, isLoading, serverErrors }) => {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-4xl mx-auto"
     >
-      <form noValidate aria-busy={isLoading} onSubmit={handleSubmit(data => onSubmit({ ...data, type: Number(data.type) }))} className="space-y-8">
+      <form noValidate aria-busy={isLoading}
+        onChange={() => { setSample(null); onValuesChange?.(); }}
+        onSubmit={handleSubmit(data => onSubmit({ ...data, type: Number(data.type) }, { sample, rangeWarnings }))}
+        className="space-y-8">
+        <section aria-label="Example wine readings" className="pb-6 border-b border-white/15">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-sm text-charcoal-200">Try a real dataset sample:</span>
+            {report.samples.map(preset => (
+              <button key={preset.name} type="button" disabled={isLoading}
+                className="px-4 py-2 min-h-11 border border-white/30 rounded-md text-sm hover:bg-white/10 disabled:opacity-50 focus-visible:ring-2 focus-visible:ring-wine-300"
+                onClick={() => { onValuesChange?.(); reset(preset.values); setSample(preset); }}>
+                {preset.name}
+              </button>
+            ))}
+          </div>
+          {sample && <p role="status" className="mt-3 text-sm text-charcoal-200">
+            {sample.name}: recorded human rating {sample.actual_quality}/10. Dataset row {sample.dataset_row + 1} (excluding header).
+            {' '}This is an example, not an accuracy test; it may have appeared in production training data.
+          </p>}
+        </section>
         {Object.keys(errors).length > 0 && (
           <div role="alert" className="p-4 border border-red-400/50 rounded-lg bg-red-900/20 text-red-300">
             <p className="font-bold">Correct these readings to calculate wine quality:</p>
@@ -82,6 +106,18 @@ const PredictionForm = ({ onSubmit, isLoading, serverErrors }) => {
             </ul>
           </div>
         )}
+        {rangeWarnings.length > 0 && <aside aria-label="Readings outside reference range" className="p-4 border-l-4 border-amber-400 bg-amber-900/10 text-amber-200">
+          <h2 className="font-bold">Some readings are outside the reference training range</h2>
+          <p className="mt-2 text-sm">You can still calculate an estimate, but it may be unreliable. These are observed benchmark ranges, not safety limits.</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {rangeWarnings.map(item => <li key={item.name}>
+              <button type="button" onClick={() => setFocus(item.name)} className="underline underline-offset-4 text-left">
+                {labels[item.name]}: {item.value} {measurementUnits[item.name]} (observed {item.min}–{item.max})
+              </button>
+            </li>)}
+          </ul>
+          <p className="mt-3 text-sm">Values within these ranges can still form unfamiliar combinations.</p>
+        </aside>}
         {/* Type Selector */}
         <fieldset disabled={isLoading} className="glass-card p-4 rounded-2xl flex items-center justify-center gap-4 border-white/5">
           <legend className="sr-only">Wine type</legend>
@@ -111,6 +147,7 @@ const PredictionForm = ({ onSubmit, isLoading, serverErrors }) => {
                     <div className="flex items-center justify-between">
                       <label htmlFor={`wine-${field.name}`} className="text-sm font-medium text-charcoal-300">
                         {field.label}
+                        {measurementUnits[field.name] && <span className="ml-1 text-xs text-charcoal-400">({measurementUnits[field.name]})</span>}
                       </label>
                       <Tooltip text={field.tooltip} label={`About ${field.label}`} />
                     </div>
