@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FlaskConical, Droplets, Thermometer, Wind, Zap } from 'lucide-react';
+import { FlaskConical, Droplets, Wind } from 'lucide-react';
 
 const glossaryData = [
   {

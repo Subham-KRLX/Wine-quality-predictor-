@@ -26,6 +26,8 @@ const Navbar = () => {
         }, 100);
         return () => clearTimeout(timer);
       }
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     }
   }, [location]);
 
@@ -52,7 +54,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-5 xl:gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -80,7 +82,7 @@ const Navbar = () => {
           aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-menu"
-          className="md:hidden text-white"
+          className="lg:hidden text-white"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X /> : <Menu />}
@@ -95,7 +97,7 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-charcoal-900 border-b border-white/10 overflow-hidden"
+            className="lg:hidden bg-charcoal-900 border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col gap-4 p-8">
               {navLinks.map((link) => (

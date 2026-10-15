@@ -9,6 +9,8 @@ A full-stack machine learning application designed to predict wine quality using
 ## Quick Links
 
 - [Open the live application](https://wine-quality-predictor-pi.vercel.app)
+- [Read the model benchmark](https://wine-quality-predictor-pi.vercel.app/evaluation)
+- [Reproduce the evaluation and understand its limits](docs/model-evaluation.md)
 - [Explore the API documentation](https://wine-quality-backend.onrender.com/docs)
 
 ## How It Works
